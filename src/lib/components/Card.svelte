@@ -4,14 +4,9 @@
 
 	let windowWidth = $state(1000);
 
-	$effect(() => {
-		console.log('windowWidth changed to:', windowWidth);
-	});
-
 	onMount(() => {
 		windowWidth = window.innerWidth;
 		const handleResize = () => {
-			console.log('resize event fired');
 			windowWidth = window.innerWidth;
 		};
 		window.addEventListener('resize', handleResize);
@@ -24,15 +19,11 @@
 	const variants = $derived({
 		shortsquare: { width: 300, height: 100 },
 		square: { width: 250, height: 250 },
-		long: { width: windowWidth - 200, height: 200 },
+		long: { width: windowWidth - 200, height: 130 },
 		icon: { width: 50, height: 50 }
 	});
 
-	$effect(() => {
-		console.log('variants.long.width changed to:', variants.long.width);
-	});
-
-	let size = $derived(variants[variant]);
+	let size = $derived(variants[variant as 'shortsquare' | 'square' | 'long' | 'icon']);
 
 	let edgePosition = $derived({
 		x: size.width - 5,

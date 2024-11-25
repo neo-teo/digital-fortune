@@ -9,7 +9,7 @@
 	<iframe
 		title="soundcloud-player"
 		width="100%"
-		height="166"
+		height="100"
 		scrolling="no"
 		frameborder="no"
 		allow="autoplay"
