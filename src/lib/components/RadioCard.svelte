@@ -5,7 +5,7 @@
 	export let url: string;
 </script>
 
-<Card title={'radio'} {number}>
+<Card variant="long" title={'radio'} {number}>
 	<iframe
 		title="soundcloud-player"
 		width="100%"

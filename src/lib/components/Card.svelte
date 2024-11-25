@@ -1,5 +1,42 @@
 <script lang="ts">
-	let { title, number, children } = $props();
+	import { onMount } from 'svelte';
+	let { title, number, children, variant = 'square' } = $props();
+
+	let windowWidth = $state(1000);
+
+	$effect(() => {
+		console.log('windowWidth changed to:', windowWidth);
+	});
+
+	onMount(() => {
+		windowWidth = window.innerWidth;
+		const handleResize = () => {
+			console.log('resize event fired');
+			windowWidth = window.innerWidth;
+		};
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	});
+
+	const variants = $derived({
+		square: { width: 300, height: 300 },
+		long: { width: windowWidth - 200, height: 200 },
+		icon: { width: 50, height: 50 }
+	});
+
+	$effect(() => {
+		console.log('variants.long.width changed to:', variants.long.width);
+	});
+
+	let size = $derived(variants[variant]);
+
+	let edgePosition = $derived({
+		x: size.width - 5,
+		y: size.height - 5
+	});
 
 	function padToThreeDigits(num: number): string {
 		return num.toString().padStart(3, '0');
@@ -14,7 +51,12 @@
 
 <div class="card-container">
 	<button onclick={() => toggleCard()}>
-		<div style:transform={flipped ? 'rotate3d(0, 1, 0, 180deg)' : ''} class="card">
+		<div
+			style:transform={flipped ? 'rotate3d(0, 1, 0, 180deg)' : ''}
+			style:width="{size.width}px"
+			style:height="{size.height}px"
+			class="card"
+		>
 			<div class="face front">
 				<div class="flex flex-col items-start p-5">
 					<h2>{title.toUpperCase()}:</h2>
@@ -29,9 +71,12 @@
 				</div>
 			</div>
 			<div class="face top"></div>
-			<div class="face bottom"></div>
+			<div
+				class="face bottom"
+				style:transform="translateY({edgePosition.y}px) rotateX(-90deg)"
+			></div>
 			<div class="face left"></div>
-			<div class="face right"></div>
+			<div class="face right" style:transform="translateX({edgePosition.x}px) rotateY(90deg)"></div>
 		</div>
 	</button>
 </div>
@@ -57,13 +102,10 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		perspective: 3000px;
+		perspective: 500px;
 	}
 
 	.card {
-		width: 300px;
-		height: 300px;
-
 		position: relative;
 		transform-style: preserve-3d;
 		transition: transform 0.7s;
@@ -72,9 +114,9 @@
 
 	.face {
 		position: absolute;
-		width: 300px;
-		height: 300px;
-		/* background: rgb(2, 222, 9, 0.2); */
+		width: 100%;
+		height: 100%;
+		background: rgb(79, 167, 255);
 
 		backface-visibility: hidden;
 
@@ -88,7 +130,7 @@
 
 	.face.front,
 	.face.back {
-		background: rgb(255, 255, 255, 0.2);
+		background: rgb(255, 255, 255, 0.5);
 	}
 
 	.face.front {
@@ -98,7 +140,8 @@
 	}
 
 	.face.back {
-		display: flex;
+		width: 100%;
+		/* display: flex; */
 		align-items: center;
 		justify-content: center;
 	}
@@ -133,15 +176,15 @@
 		transform: translateX(-5px) rotateY(-90deg);
 	}
 
-	.right {
+	/* .right {
 		transform: translateX(295px) rotateY(90deg);
-	}
+	} */
 
 	.top {
 		transform: translateY(-5px) rotateX(90deg);
 	}
 
-	.bottom {
+	/* .bottom {
 		transform: translateY(295px) rotateX(-90deg);
-	}
+	} */
 </style>
