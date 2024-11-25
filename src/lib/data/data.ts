@@ -38,5 +38,10 @@ export let pieces = [
         title: 'love life',
         number: 2,
         value: '❤️❤️❤️'
+    },
+    {
+        title: 'crush likes you back',
+        number: 2,
+        value: '50%'
     }
 ];

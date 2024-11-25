@@ -1,16 +1,18 @@
 <script lang="ts">
-	export let piece: {
-		title: string;
-		number: number;
-		src?: string;
-		value?: string;
-	};
+	// export let piece: {
+	// 	title: string;
+	// 	number: number;
+	// 	src?: string;
+	// 	value?: string;
+	// };
+
+	let { title, number, children } = $props();
 
 	function padToThreeDigits(num: number): string {
 		return num.toString().padStart(3, '0');
 	}
 
-	let flipped = false;
+	let flipped = $state(false);
 
 	function toggleCard() {
 		flipped = !flipped;
@@ -18,34 +20,19 @@
 </script>
 
 <div class="card-container">
-	<button on:click={() => toggleCard()}>
+	<button onclick={() => toggleCard()}>
 		<div style:transform={flipped ? 'rotate3d(0, 1, 0, 180deg)' : ''} class="card">
 			<div class="face front">
 				<div class="flex flex-col items-start p-5">
-					<h2>{piece.title.toUpperCase()}:</h2>
-					<h2>{piece.title}:</h2>
+					<h2>{title.toUpperCase()}:</h2>
+					<h2>{title}:</h2>
 					<br />
-					<p>#{padToThreeDigits(piece.number)}</p>
+					<p>#{padToThreeDigits(number)}</p>
 				</div>
 			</div>
 			<div class="face back">
 				<div class="flex flex-col items-start p-5">
-					<!-- <h2>{piece.title.toUpperCase()} #{padToThreeDigits(piece.number)}</h2> -->
-					{#if piece.src}
-						<img class="image" src={piece.src} alt="piece src" />
-					{:else if piece.value}
-						<p>{piece.value}</p>
-						<!-- <iframe
-							title="soundcloud-player"
-							width="100%"
-							height="166"
-							scrolling="no"
-							frameborder="no"
-							allow="autoplay"
-							src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293&amp;}"
-						>
-						</iframe> -->
-					{/if}
+					{@render children()}
 				</div>
 			</div>
 			<div class="face top"></div>

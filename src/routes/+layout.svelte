@@ -3,7 +3,9 @@
 	let { children } = $props();
 </script>
 
-{@render children()}
+<div class="bg-gradient-to-b from-orange-400 to-orange-100">
+	{@render children()}
+</div>
 
 <style lang="postcss">
 	@font-face {
