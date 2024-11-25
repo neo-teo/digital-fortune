@@ -3,12 +3,15 @@
 
 	export let title: string;
 	export let number: number;
-	export let src: string;
+	export let value: string;
 </script>
 
-<Card {title} {number}>
-	<img {src} alt={`${title} ${number}`} />
+<Card {title} {number} variant="shortsquare">
+	<p>{value}</p>
 </Card>
 
 <style lang="postcss">
+	p {
+		font-size: x-large;
+	}
 </style>

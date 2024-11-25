@@ -1,24 +1,4 @@
-export let pieces = [
-    {
-        title: 'radio',
-        number: 37,
-        value: 'cool radio station...' // radio-stations.getByNumber(37);
-    },
-    {
-        title: 'car',
-        number: 12,
-        src: '/images/001.png'
-    },
-    {
-        title: 'animal',
-        number: 3,
-        src: '/animals/001.png'
-    },
-    {
-        title: 'fruit',
-        number: 10,
-        src: '/fruit/orange.png'
-    },
+export let text_data = [
     {
         title: 'forecast',
         number: 10,

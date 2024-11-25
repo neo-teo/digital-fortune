@@ -22,7 +22,8 @@
 	});
 
 	const variants = $derived({
-		square: { width: 300, height: 300 },
+		shortsquare: { width: 300, height: 100 },
+		square: { width: 250, height: 250 },
 		long: { width: windowWidth - 200, height: 200 },
 		icon: { width: 50, height: 50 }
 	});
@@ -58,17 +59,10 @@
 			class="card"
 		>
 			<div class="face front">
-				<div class="flex flex-col items-start p-5">
-					<h2>{title.toUpperCase()}:</h2>
-					<h2>{title}:</h2>
-					<br />
-					<p>#{padToThreeDigits(number)}</p>
-				</div>
+				<h2>{title} {padToThreeDigits(number)}</h2>
 			</div>
 			<div class="face back">
-				<div class="flex flex-col items-start p-5">
-					{@render children()}
-				</div>
+				{@render children()}
 			</div>
 			<div class="face top"></div>
 			<div
@@ -88,10 +82,6 @@
 
 	h2 {
 		font-size: xx-large;
-	}
-
-	p {
-		font-size: large;
 	}
 
 	button {
@@ -128,22 +118,19 @@
 		overflow: hidden;
 	}
 
+	/* .face.front {
+		background-image: url('/cards/1.png');
+		background-size: cover;
+	} */
+
 	.face.front,
 	.face.back {
-		background: rgb(255, 255, 255, 0.5);
-	}
-
-	.face.front {
-		/* background-image: url('/cards/1.png'); */
-		/* background-size: cover; */
-		text-align: left;
-	}
-
-	.face.back {
-		width: 100%;
-		/* display: flex; */
+		display: flex;
 		align-items: center;
 		justify-content: center;
+		padding: 10px;
+
+		background: rgb(255, 255, 255, 0.5);
 	}
 
 	.face.top,
@@ -165,7 +152,7 @@
 	}
 
 	.front {
-		transform: translateZ(5px);
+		transform: translateZ(10px);
 	}
 
 	.back {
@@ -176,15 +163,7 @@
 		transform: translateX(-5px) rotateY(-90deg);
 	}
 
-	/* .right {
-		transform: translateX(295px) rotateY(90deg);
-	} */
-
 	.top {
 		transform: translateY(-5px) rotateX(90deg);
 	}
-
-	/* .bottom {
-		transform: translateY(295px) rotateX(-90deg);
-	} */
 </style>

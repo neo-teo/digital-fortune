@@ -3,7 +3,7 @@
 	let { children } = $props();
 </script>
 
-<div class="bg-gradient-to-b from-orange-400 to-orange-100">
+<div class="bg-gradient-to-b from-orange-400 to-orange-100 py-10">
 	{@render children()}
 </div>
 
