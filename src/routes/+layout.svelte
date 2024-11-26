@@ -5,7 +5,7 @@
 	let sparkles: { x: number; y: number; id: number; c: string }[] = $state([]);
 	let nextId = 0;
 	let lastSparkleTime = 0;
-	const SPARKLE_INTERVAL = 100; // ms between sparkles
+	const SPARKLE_INTERVAL = 20; // ms between sparkles
 	const SPARKLE_EMOJIS = ['✨', '🎲', '🎰', '🍀', '🎴', '🔮', '🎋', '🪬', '🧧', '🪙', '🎊']; // Fortune-themed emojis
 
 	function getRandomEmoji() {
@@ -26,7 +26,7 @@
 </script>
 
 <div
-	class="relative min-h-screen bg-gradient-to-b from-gray-400 to-gray-400 py-10"
+	class="relative min-h-screen bg-gradient-to-b from-orange-400 to-orange-300 py-10"
 	onmousemove={handleMouseMove}
 	role="presentation"
 >
@@ -53,15 +53,16 @@
 	}
 	.animate-sparkle {
 		display: inline-block;
-		animation: sparkle 3000ms ease-out forwards;
+		z-index: 10;
+		animation: sparkle 1000ms ease-out forwards;
 	}
 
 	@keyframes sparkle {
 		0% {
-			transform: scale(1.5);
+			transform: scale(1.2);
 		}
 		30% {
-			transform: scale(2);
+			transform: scale(1.5);
 		}
 		100% {
 			transform: scale(0);

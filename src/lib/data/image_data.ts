@@ -16,4 +16,14 @@ export let image_data = [
         number: 10,
         src: '/fruit/orange.png'
     },
+    {
+        title: 'house',
+        number: 10,
+        src: '/fruit/orange.png'
+    },
+    {
+        title: 'house',
+        number: 10,
+        src: '/fruit/orange.png'
+    },
 ];

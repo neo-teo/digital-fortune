@@ -16,10 +16,16 @@
 		};
 	});
 
+	let gridElWidth = $derived(
+		windowWidth >= 1024
+			? 1024 / 3 // lg breakpoint (3 cols)
+			: windowWidth / 2 // mobile (1 col)
+	);
+
 	const variants = $derived({
-		shortsquare: { width: 300, height: 100 },
-		square: { width: 250, height: 250 },
-		long: { width: windowWidth - 200, height: 130 },
+		shortsquare: { width: gridElWidth, height: gridElWidth / 2 },
+		square: { width: gridElWidth, height: gridElWidth },
+		long: { width: windowWidth > 1024 ? 1024 : windowWidth, height: 130 },
 		icon: { width: 50, height: 50 }
 	});
 
@@ -44,7 +50,7 @@
 <div class="card-container">
 	<button onclick={() => toggleCard()}>
 		<div
-			style:transform={flipped ? 'rotate3d(0, 1, 0, 180deg)' : ''}
+			style:transform={flipped ? 'rotate3d(1, 0, 0, 180deg)' : ''}
 			style:width="{size.width}px"
 			style:height="{size.height}px"
 			class="card"
@@ -84,27 +90,28 @@
 		align-items: center;
 		justify-content: center;
 		perspective: 500px;
+		transition: transform 0.7s;
 	}
 
 	.card {
 		position: relative;
 		transform-style: preserve-3d;
-		transition: transform 0.7s;
-		transform: rotate3d(0, 0, 0, 90deg);
+		transition: transform 1.5s;
+		/* transform: rotate3d(0, 0, 0, 90deg); */
 	}
 
 	.face {
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background: rgb(79, 167, 255);
+		background: blue;
 
 		backface-visibility: hidden;
 
 		color: black;
 
-		opacity: 0.95;
-		border-radius: 5px;
+		opacity: 1;
+		border: 1px solid black;
 
 		overflow: hidden;
 	}
@@ -121,13 +128,13 @@
 		justify-content: center;
 		padding: 10px;
 
-		background: rgb(255, 255, 255, 0.5);
+		background: rgb(255, 255, 255, 1);
 	}
 
 	.face.top,
 	.face.bottom {
 		margin-left: 0.5%;
-		width: 99%;
+		width: 100%;
 		height: 10px;
 	}
 
@@ -135,19 +142,24 @@
 	.face.right {
 		margin-top: 0.5%;
 		width: 10px;
-		height: 99%;
+		height: 100%;
 	}
 
-	.card-container .card:hover {
-		transform: rotate3d(1, 1, 0, 20deg);
+	.card-container:hover {
+		z-index: 1;
+		transform: scale(1.05);
 	}
+
+	/* .card-container .card:hover {
+		transform: scale(1.05);
+	} */
 
 	.front {
-		transform: translateZ(10px);
+		transform: translateZ(5px);
 	}
 
 	.back {
-		transform: translateZ(-5px) rotateY(180deg);
+		transform: translateZ(-5px) rotateZ(180deg) rotateY(180deg);
 	}
 
 	.left {
