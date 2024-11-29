@@ -1,6 +1,10 @@
 <script lang="ts">
+	import type { PageData } from './$types';
+	export let data: PageData;
+
+	const { nyc_data } = data;
+
 	import { radio_data } from '$lib/data/radio_data';
-	import { nyc_data } from '$lib/data/nyc_data';
 	import { onMount } from 'svelte';
 
 	import Card from '$lib/components/Card.svelte';
@@ -31,9 +35,12 @@
 			<Typewriter text="Have a nice day!" speed={100} delay={4000} />
 		</h1>
 		<div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-			{#each nyc_data as { title, number, src }}
-				<Card {title} {number}>
-					<img {src} alt={`${title} ${number}`} />
+			{#each nyc_data as { title, src, label }}
+				<Card {title}>
+					{#if label}
+						<p>{label}</p>
+					{/if}
+					<img {src} alt={`${title}`} />
 				</Card>
 			{/each}
 		</div>

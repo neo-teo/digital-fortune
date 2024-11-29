@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	let { title, number, children, variant = 'square' } = $props();
+	let { title, children, variant = 'square' } = $props();
 
 	const variants = $derived({
 		shortsquare: { width: 256, height: 256 / 2 },
@@ -15,10 +15,6 @@
 		y: size.height - 5
 	});
 
-	function padToThreeDigits(num: number): string {
-		return num.toString().padStart(3, '0');
-	}
-
 	let hovered = $state(false);
 	let flipped = $state(false);
 
@@ -29,7 +25,7 @@
 	let backgroundImage = $state('');
 
 	onMount(() => {
-		const randomCardNumber = Math.floor(Math.random() * 7) + 1;
+		const randomCardNumber = Math.floor(Math.random() * 8) + 1;
 		backgroundImage = `/cards/${randomCardNumber}.jpeg`;
 	});
 
@@ -90,7 +86,7 @@
 				{/if}
 			</div>
 			<div class="face back">
-				<h2>{title} {padToThreeDigits(number)}</h2>
+				<h2>{title}</h2>
 				{@render children()}
 			</div>
 			<div class="face top"></div>
