@@ -2,34 +2,13 @@
 	import { onMount } from 'svelte';
 	let { title, number, children, variant = 'square' } = $props();
 
-	let windowWidth = $state(1000);
-
-	onMount(() => {
-		windowWidth = window.innerWidth;
-		const handleResize = () => {
-			windowWidth = window.innerWidth;
-		};
-		window.addEventListener('resize', handleResize);
-
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	});
-
-	let gridElWidth = $derived(
-		windowWidth >= 1024
-			? 1024 / 3 // lg breakpoint (3 cols)
-			: windowWidth / 2 // mobile (1 col)
-	);
-
 	const variants = $derived({
-		shortsquare: { width: gridElWidth, height: gridElWidth / 2 },
-		square: { width: gridElWidth, height: gridElWidth },
-		long: { width: windowWidth > 1024 ? 1024 : windowWidth, height: 130 },
+		shortsquare: { width: 256, height: 256 / 2 },
+		square: { width: 256, height: 256 * 1.5 },
 		icon: { width: 50, height: 50 }
 	});
 
-	let size = $derived(variants[variant as 'shortsquare' | 'square' | 'long' | 'icon']);
+	let size = $derived(variants[variant as 'shortsquare' | 'square' | 'icon']);
 
 	let edgePosition = $derived({
 		x: size.width - 5,
@@ -40,25 +19,78 @@
 		return num.toString().padStart(3, '0');
 	}
 
+	let hovered = $state(false);
 	let flipped = $state(false);
 
 	function toggleCard() {
-		flipped = !flipped;
+		flipped = true;
 	}
+
+	let backgroundImage = $state('');
+
+	onMount(() => {
+		const randomCardNumber = Math.floor(Math.random() * 7) + 1;
+		backgroundImage = `/cards/${randomCardNumber}.jpeg`;
+	});
+
+	let sparkles: { x: number; y: number; id: number; c: string }[] = $state([]);
+	let nextId = 0;
+
+	function getRandomPosition(width: number, height: number) {
+		let x = Math.random() * width;
+		let y = Math.random() * height;
+		return { x, y };
+	}
+
+	let sparkleInterval: NodeJS.Timeout;
+
+	$effect(() => {
+		if (hovered && !flipped) {
+			sparkleInterval = setInterval(() => {
+				const pos = getRandomPosition(size.width, size.height);
+				sparkles = [
+					...sparkles,
+					{
+						x: pos.x,
+						y: pos.y,
+						id: nextId++,
+						c: '✨'
+					}
+				].slice(-20);
+			}, 200); // Create new sparkle every 100ms
+		} else {
+			clearInterval(sparkleInterval);
+			sparkles = [];
+		}
+
+		return () => clearInterval(sparkleInterval);
+	});
 </script>
 
-<div class="card-container">
-	<button onclick={() => toggleCard()}>
+<div
+	class="card-container relative overflow-visible"
+	class:pulse-scale={hovered && !flipped}
+	style:transform={`scale(${!hovered || flipped ? 1 : ''})`}
+	role="presentation"
+>
+	<button
+		onmouseenter={() => (hovered = true)}
+		onmouseleave={() => (hovered = false)}
+		onclick={() => toggleCard()}
+	>
 		<div
-			style:transform={flipped ? 'rotate3d(1, 0, 0, 180deg)' : ''}
+			style:transform={flipped ? 'rotate3d(0, 1, 0, 180deg)' : `rotate3d(1, 0, 0, 20deg)`}
 			style:width="{size.width}px"
 			style:height="{size.height}px"
 			class="card"
 		>
 			<div class="face front">
-				<h2>{title} {padToThreeDigits(number)}</h2>
+				{#if backgroundImage}
+					<img src={backgroundImage} alt="card" />
+				{/if}
 			</div>
 			<div class="face back">
+				<h2>{title} {padToThreeDigits(number)}</h2>
 				{@render children()}
 			</div>
 			<div class="face top"></div>
@@ -70,15 +102,17 @@
 			<div class="face right" style:transform="translateX({edgePosition.x}px) rotateY(90deg)"></div>
 		</div>
 	</button>
+
+	{#each sparkles as sparkle (sparkle.id)}
+		<div class="pointer-events-none absolute" style="left: {sparkle.x}px; top: {sparkle.y}px;">
+			<span class="animate-sparkle text-xl">{sparkle.c}</span>
+		</div>
+	{/each}
 </div>
 
 <style lang="postcss">
-	* {
-		font-family: Bianzhidai;
-	}
-
 	h2 {
-		font-size: xx-large;
+		font-size: large;
 	}
 
 	button {
@@ -100,26 +134,34 @@
 		/* transform: rotate3d(0, 0, 0, 90deg); */
 	}
 
+	.face.front img {
+		border-radius: 10px;
+		/* width: 90%; */
+	}
+
 	.face {
 		position: absolute;
 		width: 100%;
 		height: 100%;
-		background: blue;
+
+		border-radius: 10px;
 
 		backface-visibility: hidden;
 
 		color: black;
 
 		opacity: 1;
-		border: 1px solid black;
 
 		overflow: hidden;
 	}
 
-	/* .face.front {
-		background-image: url('/cards/1.png');
-		background-size: cover;
-	} */
+	.face.front {
+		/* background-color: rgb(0, 0, 0); */
+		background-position: center;
+		background-repeat: no-repeat;
+		padding: 10px;
+		image-rendering: pixelated;
+	}
 
 	.face.front,
 	.face.back {
@@ -128,7 +170,9 @@
 		justify-content: center;
 		padding: 10px;
 
-		background: rgb(255, 255, 255, 1);
+		border: 1px solid gray;
+
+		background: rgb(252, 251, 239);
 	}
 
 	.face.top,
@@ -147,19 +191,19 @@
 
 	.card-container:hover {
 		z-index: 1;
-		transform: scale(1.05);
 	}
 
-	/* .card-container .card:hover {
-		transform: scale(1.05);
+	/* .front {
+		transform: translateZ(5px);
 	} */
 
-	.front {
-		transform: translateZ(5px);
-	}
-
 	.back {
-		transform: translateZ(-5px) rotateZ(180deg) rotateY(180deg);
+		/* translateZ(-5px) */
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		transform: rotateY(180deg);
 	}
 
 	.left {
@@ -168,5 +212,36 @@
 
 	.top {
 		transform: translateY(-5px) rotateX(90deg);
+	}
+
+	.animate-sparkle {
+		display: inline-block;
+		z-index: 10;
+		animation: float-up 3000ms ease-out;
+	}
+
+	@keyframes float-up {
+		0% {
+			transform: translate(0, 0) scale(1);
+			opacity: 1;
+		}
+		100% {
+			transform: translate(0, -20px) scale(0.8);
+			opacity: 0;
+		}
+	}
+
+	.pulse-scale {
+		animation: pulse 1.5s ease-in-out infinite;
+	}
+
+	@keyframes pulse {
+		0%,
+		100% {
+			transform: scale(1.02);
+		}
+		50% {
+			transform: scale(1.04);
+		}
 	}
 </style>
