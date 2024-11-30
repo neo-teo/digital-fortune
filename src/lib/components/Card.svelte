@@ -10,15 +10,15 @@
 
 	let size = $derived(variants[variant as 'shortsquare' | 'square' | 'icon']);
 
-	let edgePosition = $derived({
-		x: size.width - 5,
-		y: size.height - 5
-	});
-
 	let hovered = $state(false);
 	let flipped = $state(false);
 
+	let randomX = $state(0);
+	let randomY = $state(0);
+
 	function toggleCard() {
+		randomX = (Math.random() - 0.5) * 10;
+		randomY = (Math.random() - 0.5) * 10;
 		flipped = true;
 	}
 
@@ -75,7 +75,9 @@
 		onclick={() => toggleCard()}
 	>
 		<div
-			style:transform={flipped ? 'rotate3d(0, 1, 0, 180deg)' : `rotate3d(1, 0, 0, 20deg)`}
+			style:transform={flipped
+				? `rotate3d(0, 1, 0, 180deg) rotate3d(1, 0, 0, ${randomX}deg) rotate3d(0, 0, 1, ${randomY}deg)`
+				: `rotate3d(1, 0, 0, 20deg)`}
 			style:width="{size.width}px"
 			style:height="{size.height}px"
 			class="card"
@@ -84,18 +86,15 @@
 				{#if backgroundImage}
 					<img src={backgroundImage} alt="card" />
 				{/if}
+				<h2>{title}</h2>
 			</div>
 			<div class="face back">
-				<h2>{title}</h2>
 				{@render children()}
 			</div>
 			<div class="face top"></div>
-			<div
-				class="face bottom"
-				style:transform="translateY({edgePosition.y}px) rotateX(-90deg)"
-			></div>
+			<div class="face bottom" style:transform="rotateX(-90deg)"></div>
 			<div class="face left"></div>
-			<div class="face right" style:transform="translateX({edgePosition.x}px) rotateY(90deg)"></div>
+			<div class="face right" style:transform="rotateY(90deg)"></div>
 		</div>
 	</button>
 
@@ -132,7 +131,7 @@
 
 	.face.front img {
 		border-radius: 10px;
-		/* width: 90%; */
+		height: 90%;
 	}
 
 	.face {
@@ -152,11 +151,11 @@
 	}
 
 	.face.front {
-		/* background-color: rgb(0, 0, 0); */
-		background-position: center;
-		background-repeat: no-repeat;
-		padding: 10px;
+		padding: 5px;
 		image-rendering: pixelated;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
 
 	.face.front,
@@ -164,7 +163,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 10px;
 
 		border: 1px solid gray;
 
@@ -188,10 +186,6 @@
 	.card-container:hover {
 		z-index: 1;
 	}
-
-	/* .front {
-		transform: translateZ(5px);
-	} */
 
 	.back {
 		/* translateZ(-5px) */

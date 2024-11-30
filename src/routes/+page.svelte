@@ -37,10 +37,16 @@
 		<div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
 			{#each nyc_data as { title, src, label }}
 				<Card {title}>
-					{#if label}
-						<p>{label}</p>
-					{/if}
-					<img {src} alt={`${title}`} />
+					<div class="flex h-full flex-col justify-between py-5">
+						<h2>{title}</h2>
+
+						<div class="flex flex-col items-center gap-2">
+							<img {src} alt={`${title}`} />
+							{#if label}
+								<p>{label}</p>
+							{/if}
+						</div>
+					</div>
 				</Card>
 			{/each}
 		</div>
@@ -53,4 +59,7 @@
 	/* h1 {
 		text-align: center;
 	} */
+	h2 {
+		font-size: large;
+	}
 </style>

@@ -30,47 +30,51 @@ export function load() {
     return {
         nyc_data: [
             {
-                title: 'lucky train line',
+                title: 'Lucky Subway',
                 label: trainLine.label,
                 src: trainLine.src
             },
             {
-                title: 'lucky street',
+                title: 'Lucky Street',
                 label: street.label,
                 src: street.src
             },
             {
-                title: 'lucky slice',
+                title: 'Lucky Slice',
                 label: slice.label,
                 src: slice.src
             },
             {
-                title: 'lucky diner',
-                src: '/fruit/orange.png'
-            },
-            {
-                title: 'lucky bar',
-                src: '/fruit/orange.png'
-            },
-            {
-                title: 'lucky park',
+                title: 'Lucky Park',
                 label: park.label,
                 src: park.src
             },
             {
-                title: 'lucky deli',
+                title: 'Lucky Diner',
                 src: '/fruit/orange.png'
             },
             {
-                title: 'lucky library',
+                title: 'Lucky Bar',
                 src: '/fruit/orange.png'
             },
             {
-                title: 'lucky emoji',
+                title: 'Lucky Deli',
                 src: '/fruit/orange.png'
             },
             {
-                title: 'run into crush',
+                title: 'Lucky Library',
+                src: '/fruit/orange.png'
+            },
+            {
+                title: 'Lucky Car',
+                src: '/fruit/orange.png'
+            },
+            {
+                title: 'Lucky Emoji',
+                src: '/fruit/orange.png'
+            },
+            {
+                title: 'Run Into Crush',
                 src: '/fruit/orange.png'
             },
         ]
