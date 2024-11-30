@@ -30,34 +30,41 @@ export function load() {
     return {
         nyc_data: [
             {
+                cover: '/cards/construction.jpeg',
                 title: 'Lucky Subway',
                 label: trainLine.label,
                 src: trainLine.src
             },
             {
+                cover: '/cards/car.jpeg',
                 title: 'Lucky Street',
                 label: street.label,
                 src: street.src
             },
             {
+                cover: '/cards/slice.jpeg',
                 title: 'Lucky Slice',
                 label: slice.label,
                 src: slice.src
             },
             {
+                cover: '/cards/park.jpeg',
                 title: 'Lucky Park',
                 label: park.label,
                 src: park.src
             },
             {
+                cover: '/cards/diner.jpeg',
                 title: 'Lucky Diner',
                 src: '/fruit/orange.png'
             },
             {
+                cover: '/cards/bar.jpeg',
                 title: 'Lucky Bar',
                 src: '/fruit/orange.png'
             },
             {
+                cover: '/cards/deli.jpeg',
                 title: 'Lucky Deli',
                 src: '/fruit/orange.png'
             },
@@ -66,6 +73,7 @@ export function load() {
                 src: '/fruit/orange.png'
             },
             {
+                cover: '/cards/car.jpeg',
                 title: 'Lucky Car',
                 src: '/fruit/orange.png'
             },

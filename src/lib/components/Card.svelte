@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	let { title, children, variant = 'square' } = $props();
+	let { front, back, variant = 'square' } = $props();
 
 	const variants = $derived({
 		shortsquare: { width: 256, height: 256 / 2 },
@@ -21,13 +20,6 @@
 		randomY = (Math.random() - 0.5) * 10;
 		flipped = true;
 	}
-
-	let backgroundImage = $state('');
-
-	onMount(() => {
-		const randomCardNumber = Math.floor(Math.random() * 8) + 1;
-		backgroundImage = `/cards/${randomCardNumber}.jpeg`;
-	});
 
 	let sparkles: { x: number; y: number; id: number; c: string }[] = $state([]);
 	let nextId = 0;
@@ -83,13 +75,10 @@
 			class="card"
 		>
 			<div class="face front">
-				{#if backgroundImage}
-					<img src={backgroundImage} alt="card" />
-				{/if}
-				<h2>{title}</h2>
+				{@render front()}
 			</div>
 			<div class="face back">
-				{@render children()}
+				{@render back()}
 			</div>
 			<div class="face top"></div>
 			<div class="face bottom" style:transform="rotateX(-90deg)"></div>
