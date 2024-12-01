@@ -26,6 +26,20 @@
 	});
 </script>
 
+<div class="flex justify-center">
+	<div class="flex max-w-[1024px] flex-col gap-5 px-20">
+		<h1 class="h-[150px] text-4xl">
+			<Typewriter text="Today is {today}" speed={100} /> <br /><br />
+			<Typewriter text="Have a nice day!" speed={100} delay={4000} />
+		</h1>
+		<div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+			{@render cards()}
+		</div>
+
+		<!-- <FortuneRadio url={fortune_radio_url} /> -->
+	</div>
+</div>
+
 {#snippet cards()}
 	{#each nyc_data as { title, src, label, cover }}
 		{#snippet card_front()}
@@ -55,22 +69,6 @@
 		<Card front={card_front} back={card_back} />
 	{/each}
 {/snippet}
-
-<div class="flex justify-center">
-	<div class="flex max-w-[1024px] flex-col gap-5 px-20">
-		<h1 class="h-[150px] text-4xl">
-			<Typewriter text="Today is {today}" speed={100} />
-			<br />
-			<br />
-			<Typewriter text="Have a nice day!" speed={100} delay={4000} />
-		</h1>
-		<div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-			{@render cards()}
-		</div>
-
-		<FortuneRadio url={fortune_radio_url} />
-	</div>
-</div>
 
 <style lang="postcss">
 	/* h1 {
