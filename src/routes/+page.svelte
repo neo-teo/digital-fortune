@@ -4,14 +4,12 @@
 
 	const { nyc_data } = data;
 
-	import { radio_data } from '$lib/data/radio_data';
 	import { onMount } from 'svelte';
 
 	import Card from '$lib/components/Card.svelte';
 	import FortuneRadio from '$lib/components/FortuneRadio.svelte';
 	import Typewriter from '$lib/components/Typewriter.svelte';
 
-	const fortune_radio_url = radio_data[0].url;
 	let userAgent = '';
 
 	onMount(() => {
@@ -36,7 +34,7 @@
 			{@render cards()}
 		</div>
 
-		<!-- <FortuneRadio url={fortune_radio_url} /> -->
+		<FortuneRadio />
 	</div>
 </div>
 
@@ -46,8 +44,6 @@
 			<div class="flex h-full flex-col items-center justify-between">
 				{#if cover}
 					<img src={cover} alt={`${title}`} />
-				{:else}
-					<img src={'fruit/orange.png'} alt="orange lol" />
 				{/if}
 				<h2>{title}</h2>
 			</div>
@@ -71,9 +67,6 @@
 {/snippet}
 
 <style lang="postcss">
-	/* h1 {
-		text-align: center;
-	} */
 	h2 {
 		font-size: large;
 	}

@@ -95,10 +95,6 @@
 </div>
 
 <style lang="postcss">
-	h2 {
-		font-size: large;
-	}
-
 	button {
 		width: fit-content;
 	}

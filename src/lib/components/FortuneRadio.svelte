@@ -1,5 +1,6 @@
 <script lang="ts">
-	export let url: string;
+	let url: string =
+		'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/293&amp';
 
 	// You can switch between different NYC radio station streams
 	// export let url: string = 'https://stream.wqxr.org/wqxr-web'; // WQXR Classical
