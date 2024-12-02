@@ -60,13 +60,17 @@
 			{/if}
 		</div>
 		{#if phase >= PHASES.CONTINUE && chapterIndex < chapters.length - 1}
-			<StarryButton
-				label="Continue?"
-				onclick={() => {
-					chapterIndex++;
-					phase = PHASES.IDLE;
-				}}
-			/>
+			{#if chapterIndex < chapters.length - 1}
+				<StarryButton
+					label="Continue?"
+					onclick={() => {
+						chapterIndex++;
+						phase = PHASES.IDLE;
+					}}
+				/>
+			{:else}
+				<Typewriter text={'Have a wonderful day !'} />
+			{/if}
 		{/if}
 	</div>
 </div>

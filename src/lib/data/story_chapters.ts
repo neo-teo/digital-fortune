@@ -43,6 +43,6 @@ export const chapters: Chapter[] = [
     {
         id: 'love',
         introText: 'Now, let\'s peek into matters of the heart...',
-        outroText: 'That\'s all for now. Come back tomorrow for a new reading.\n\nHave a nice day!'
+        outroText: 'That\'s all for now. Come back tomorrow for a new reading.'
     }
 ]; 
