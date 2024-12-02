@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { chapters } from '$lib/data/story_chapters';
 	import Typewriter from './Typewriter.svelte';
-	import Card from './Card.svelte';
-	import FortuneCard from './FortuneCard.svelte';
+	import FortuneCards from './FortuneCards.svelte';
 
 	let { misc_data, nyc_data, love_data } = $props();
 
@@ -43,28 +42,19 @@
 		{#if phase >= PHASES.INTRO}
 			<Typewriter
 				text={introText}
-				speed={100}
 				oncomplete={() => (phase = currentChapter.id === 'intro' ? PHASES.OUTRO : PHASES.CARDS)}
 			/>
 		{/if}
 
 		{#if phase >= PHASES.CARDS && currentChapter.id !== 'intro'}
-			<div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-				{#each card_data as { title, src, label, cover }}
-					<FortuneCard {title} {src} {label} {cover} />
-				{/each}
-			</div>
+			<FortuneCards cards={card_data} onAllFlipped={() => (phase = PHASES.OUTRO)} />
 		{/if}
 
 		{#if phase >= PHASES.OUTRO}
-			<Typewriter
-				text={currentChapter.outroText}
-				speed={100}
-				oncomplete={() => (phase = PHASES.CONTINUE)}
-			/>
+			<Typewriter text={currentChapter.outroText} oncomplete={() => (phase = PHASES.CONTINUE)} />
 		{/if}
 
-		{#if phase >= PHASES.CONTINUE}
+		{#if phase >= PHASES.CONTINUE && chapterIndex < chapters.length - 1}
 			<button
 				class="continue-button"
 				onclick={() => {

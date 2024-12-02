@@ -4,11 +4,10 @@
 
 	const { misc_data, nyc_data, love_data } = data;
 
-	import FortuneCard from '$lib/components/FortuneCard.svelte';
 	import FortuneRadio from '$lib/components/FortuneRadio.svelte';
-	import StoryController from '$lib/components/StoryController.svelte';
+	import FortuneTeller from '$lib/components/FortuneTeller.svelte';
 </script>
 
-<StoryController {misc_data} {nyc_data} {love_data} />
+<FortuneTeller {misc_data} {nyc_data} {love_data} />
 
-<FortuneRadio />
+<!-- <FortuneRadio /> -->

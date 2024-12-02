@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { front, back, variant = 'square' } = $props();
+	let { front, back, variant = 'square', onFlip = () => {} } = $props();
 
 	const variants = $derived({
 		shortsquare: { width: 256, height: 256 / 2 },
@@ -15,7 +15,10 @@
 	let randomX = $state(0);
 	let randomY = $state(0);
 
-	function toggleCard() {
+	function flipCard() {
+		if (!flipped) {
+			onFlip();
+		}
 		randomX = (Math.random() - 0.5) * 10;
 		randomY = (Math.random() - 0.5) * 10;
 		flipped = true;
@@ -64,7 +67,7 @@
 	<button
 		onmouseenter={() => (hovered = true)}
 		onmouseleave={() => (hovered = false)}
-		onclick={() => toggleCard()}
+		onclick={flipCard}
 	>
 		<div
 			style:transform={flipped
