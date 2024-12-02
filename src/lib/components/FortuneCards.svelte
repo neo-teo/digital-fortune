@@ -28,7 +28,9 @@
 			<div class="flex h-full flex-col justify-between py-5">
 				<h2>{title}</h2>
 				<div class="flex flex-col items-center gap-2">
-					<img {src} alt={title} />
+					{#if src}
+						<img {src} alt={title} />
+					{/if}
 					{#if label}
 						<p>{label}</p>
 					{/if}

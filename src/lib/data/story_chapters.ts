@@ -28,17 +28,17 @@ export const chapters: Chapter[] = [
     {
         id: 'intro',
         introText: `Today is ${today}.`,
-        outroText: 'Would you like to receive your digital fortune?'
+        outroText: 'Would you like to take a look at your digital fortune?'
     },
     {
         id: 'misc',
         introText: getDayMessage(),
-        outroText: 'The next category is New York specific.'
+        outroText: 'The next category is about the city you live in.'
     },
     {
         id: 'nyc',
         introText: 'Let\'s see what New York has in store for you...',
-        outroText: 'The next category is love life.'
+        outroText: 'The next category is about relationships.'
     },
     {
         id: 'love',

@@ -1,4 +1,5 @@
 import { TRAIN_LINES, STREETS, SLICES, PARKS } from '$lib/data/nyc_data';
+import { CARS, FRUITS } from '$lib/data/item_data';
 
 function getRandomTrainLine() {
     const randomIndex = Math.floor(Math.random() * TRAIN_LINES.length);
@@ -20,7 +21,41 @@ function getRandomPark() {
     return PARKS[randomIndex];
 }
 
+function getRandomCar() {
+    const randomIndex = Math.floor(Math.random() * CARS.length);
+    return CARS[randomIndex];
+}
+
+function getRandomFruit() {
+    const randomIndex = Math.floor(Math.random() * FRUITS.length);
+    return FRUITS[randomIndex];
+}
+
 export function load() {
+
+    let car = getRandomCar();
+    let fruit = getRandomFruit();
+
+    const misc_data = [
+        {
+            cover: '/cards/car.jpeg',
+            title: '#1',
+            label: 'If you see a ' + car.label + ' today, take a moment to consider its surroundings.',
+            src: car.src
+        },
+        {
+            cover: '/cards/unlucky.jpeg',
+            title: '#2',
+            label: "Don't let an " + fruit.label + " ruin your day.",
+            src: fruit.src
+        },
+        {
+            cover: '/cards/diner.jpeg',
+            title: '#3',
+            label: "Consider going for a walk between 12:50PM and 1:10PM today",
+            // src: '/fruit/orange.png'
+        },
+    ]
 
     let trainLine = getRandomTrainLine();
     let street = getRandomStreet();
@@ -30,20 +65,20 @@ export function load() {
     const nyc_data = [
         {
             cover: '/cards/construction.jpeg',
-            title: 'Lucky Subway',
-            label: trainLine.label,
+            title: '#1',
+            label: 'Time to ride the ' + trainLine.label + ". It will guide you well.",
             src: trainLine.src
         },
         {
             cover: '/cards/slice.jpeg',
-            title: 'Lucky Slice',
-            label: slice.label,
+            title: '#2',
+            label: 'Get a slice at ' + slice.label + ", maybe even two.",
             src: slice.src
         },
         {
             cover: '/cards/park.jpeg',
-            title: 'Lucky Park',
-            label: park.label,
+            title: '#3',
+            label: 'Only good things can come from hanging around ' + park.label + " today",
             src: park.src
         },
         // {
@@ -73,37 +108,22 @@ export function load() {
         // },
     ]
 
-    const misc_data = [
-        {
-            cover: '/cards/car.jpeg',
-            title: 'Lucky Car',
-            src: '/fruit/orange.png'
-        },
-        {
-            title: 'Lucky Emoji',
-            src: '/fruit/orange.png'
-        },
-        {
-            title: 'Lucky Ting',
-            src: '/fruit/orange.png'
-        },
-    ]
-
     const love_data = [
         {
-            title: 'Love #1',
-            label: 'Run Into Crush',
-            src: '/fruit/orange.png'
+            cover: '/cards/school.jpeg',
+            title: '#1',
+            label: 'You are likely to have an encounter today. It is unclear if it will be for the better or worse.',
         },
         {
-            title: 'Love #2',
-            label: 'Send the message you\'ve been thinking of',
-            src: '/fruit/orange.png'
+            cover: '/cards/friend.jpeg',
+            title: '#2',
+            label: 'Today is not the day to send the message you\'ve been thinking of. Take time to reflect.',
         },
         {
-            title: 'Lucky #3',
-            label: 'something else',
-            src: '/fruit/orange.png'
+            cover: '/cards/bar.jpeg',
+            title: '#3',
+            label: '???',
+            src: '/cat.gif'
         },
     ]
 
