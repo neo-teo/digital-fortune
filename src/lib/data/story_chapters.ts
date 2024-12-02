@@ -27,7 +27,7 @@ const today = new Date().toLocaleDateString('en-US', {
 export const chapters: Chapter[] = [
     {
         id: 'intro',
-        introText: `Ah, welcome ... !\n\nToday is ${today}.`,
+        introText: `Today is ${today}.`,
         outroText: 'Would you like to receive your digital fortune?'
     },
     {

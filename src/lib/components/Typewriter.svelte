@@ -25,7 +25,7 @@
 	});
 </script>
 
-<div class="whitespace-pre-wrap text-center">{displayText}</div>
+<div class="text-center" class:break-all={!text.includes(' ')}>{displayText}</div>
 
 <style>
 </style>
