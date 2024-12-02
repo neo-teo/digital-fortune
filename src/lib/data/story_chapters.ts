@@ -1,11 +1,9 @@
 export interface Chapter {
     id: string;
     introText: string;
-    cardType: 'fortune' | 'nyc' | 'love';
-    continueText?: string;  // Optional - if not provided, it's the last chapter
+    outroText: string;
 }
 
-// Helper function to get day-specific message
 function getDayMessage(): string {
     const day = new Date().getDay();
     return {
@@ -29,20 +27,22 @@ const today = new Date().toLocaleDateString('en-US', {
 export const chapters: Chapter[] = [
     {
         id: 'intro',
-        introText: `Hi there! Today is ${today}.\n\n${getDayMessage()}\n\nWould you like to receive today's digital fortune?`,
-        cardType: 'fortune',
-        continueText: 'The next category is New York specific.'
+        introText: `Ah, welcome ... !\n\nToday is ${today}.`,
+        outroText: 'Would you like to receive your digital fortune?'
+    },
+    {
+        id: 'misc',
+        introText: getDayMessage(),
+        outroText: 'The next category is New York specific.'
     },
     {
         id: 'nyc',
         introText: 'Let\'s see what New York has in store for you...',
-        cardType: 'nyc',
-        continueText: 'The next category is love life.'
+        outroText: 'The next category is love life.'
     },
     {
         id: 'love',
         introText: 'Now, let\'s peek into matters of the heart...',
-        cardType: 'love'
-        // No continueText means this is the last chapter
+        outroText: 'That\'s all for now. Come back tomorrow for a new reading.\n\nHave a nice day!'
     }
 ]; 

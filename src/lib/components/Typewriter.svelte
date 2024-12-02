@@ -3,28 +3,29 @@
 
 	export let text: string;
 	export let speed: number = 50; // milliseconds per character
-	export let delay: number = 0; // initial delay before starting
+
+	export let oncomplete: () => void = () => console.log('typewriter oncomplete ignored');
 
 	let displayText = '';
 
 	onMount(() => {
-		setTimeout(() => {
-			let currentIndex = 0;
-			const interval = setInterval(() => {
-				if (currentIndex <= text.length) {
-					displayText = text.slice(0, currentIndex);
-					currentIndex++;
-				} else {
-					clearInterval(interval);
-				}
-			}, speed);
+		let currentIndex = 0;
 
-			return () => clearInterval(interval);
-		}, delay);
+		const interval = setInterval(() => {
+			if (currentIndex <= text.length) {
+				displayText = text.slice(0, currentIndex);
+				currentIndex++;
+			} else {
+				clearInterval(interval);
+				oncomplete?.();
+			}
+		}, speed);
+
+		return () => clearInterval(interval);
 	});
 </script>
 
-<span class="typewriter">{displayText}</span>
+<div class="whitespace-pre-wrap text-center">{displayText}</div>
 
 <style>
 </style>
