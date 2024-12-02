@@ -62,7 +62,7 @@
 		{#if phase >= PHASES.CONTINUE && chapterIndex < chapters.length - 1}
 			{#if chapterIndex < chapters.length - 1}
 				<StarryButton
-					label="Continue?"
+					label="Continue"
 					onclick={() => {
 						chapterIndex++;
 						phase = PHASES.IDLE;

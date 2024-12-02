@@ -16,7 +16,7 @@
 </div>
 
 <style lang="postcss">
-	* {
+	:global(body) {
 		font-family: Hershey;
 	}
 

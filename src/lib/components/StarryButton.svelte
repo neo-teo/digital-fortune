@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { onclick, label } = $props();
+	let { onclick, label, class: className = '' } = $props();
 
 	let hovered = $state(false);
 	let sparkles: { x: number; y: number; id: number; c: string }[] = $state([]);
@@ -38,7 +38,7 @@
 	});
 </script>
 
-<div class="relative">
+<div class={`${className} ${className.includes('fixed') ? '' : 'relative'}`}>
 	<button
 		bind:this={buttonElement}
 		class="continue-button"
@@ -61,7 +61,7 @@
 		width: fit-content;
 		padding: 0.5rem 1rem;
 		cursor: pointer;
-		border-radius: 0.25rem;
+		border-radius: 5rem;
 		border: 1px solid black;
 	}
 
