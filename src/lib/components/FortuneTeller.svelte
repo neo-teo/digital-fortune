@@ -24,13 +24,14 @@
 	let phase = $state<number>(PHASES.IDLE);
 
 	let currentChapter = $derived(chapters[chapterIndex]);
-
 	let card_data = $derived(
 		currentChapter.id === 'nyc' ? nyc_data : currentChapter.id === 'love' ? love_data : misc_data
 	);
 
-	onMount(() => {
-		requestAnimationFrame(() => (phase = PHASES.THINKING));
+	$effect(() => {
+		if (phase === PHASES.IDLE) {
+			requestAnimationFrame(() => (phase = PHASES.THINKING));
+		}
 	});
 </script>
 
