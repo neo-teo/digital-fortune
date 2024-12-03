@@ -36,6 +36,10 @@
 				{@const _ = setTimeout(() => (phase = PHASES.THINKING), 0)}
 			{/if}
 
+			{#if currentChapter.id === 'intro'}
+				<img src="goodluckspa.png" class="swingy w-3/4" alt="good luck spa !! :-)" />
+			{/if}
+
 			{#if phase >= PHASES.THINKING}
 				<Typewriter
 					text={currentChapter.id === 'intro' ? 'Ah ... welcome !' : generateThinkingPattern()}
@@ -51,8 +55,10 @@
 				/>
 			{/if}
 
-			{#if phase >= PHASES.CARDS && currentChapter.id !== 'intro'}
-				<FortuneCards cards={card_data} onAllFlipped={() => (phase = PHASES.OUTRO)} />
+			{#if phase >= PHASES.CARDS}
+				{#if currentChapter.id !== 'intro'}
+					<FortuneCards cards={card_data} onAllFlipped={() => (phase = PHASES.OUTRO)} />
+				{/if}
 			{/if}
 
 			{#if phase >= PHASES.OUTRO}
@@ -76,4 +82,17 @@
 </div>
 
 <style>
+	.swingy {
+		transform-origin: top center;
+		animation: swing 2s ease-in-out infinite alternate;
+	}
+
+	@keyframes swing {
+		from {
+			transform: rotate(-3deg);
+		}
+		to {
+			transform: rotate(3deg);
+		}
+	}
 </style>

@@ -17,7 +17,7 @@
 
 <style lang="postcss">
 	:global(body) {
-		font-family: Hershey;
+		font-family: Hershey, 'Times New Roman', serif;
 	}
 
 	@font-face {

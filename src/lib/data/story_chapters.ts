@@ -10,7 +10,7 @@ function getDayMessage(): string {
         0: "Sunday's digital energies are especially strong today.",
         1: "Monday's digital waves are realigning your path.",
         2: "Tuesday's binary streams are particularly clear.",
-        3: "Wednesday's digital winds bring interesting changes.",
+        3: "Wednesday's binary streams are particularly clear.",
         4: "Thursday's electronic pulses are revealing secrets.",
         5: "Friday's digital stars are especially bright.",
         6: "Saturday's virtual forces are in perfect harmony."
@@ -37,12 +37,12 @@ export const chapters: Chapter[] = [
     },
     {
         id: 'nyc',
-        introText: 'Let\'s see what New York has in store for you...',
+        introText: 'Let\'s see what the city has in store for you...',
         outroText: 'The next category is about relationships.'
     },
     {
         id: 'love',
-        introText: 'Now, let\'s peek into matters of the heart...',
-        outroText: 'That\'s all for now. Come back tomorrow for a new reading.'
+        introText: 'Hmm ...',
+        outroText: 'That\'s all for now. Check back tomorrow for new reading.'
     }
 ]; 
