@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	export let text: string;
-	export let speed: number = 50; // milliseconds per character
+	let {
+		text,
+		speed = 50,
+		oncomplete = () => console.log('typewriter oncomplete ignored')
+	} = $props();
 
-	export let oncomplete: () => void = () => console.log('typewriter oncomplete ignored');
-
-	let displayText = '';
+	let displayText = $state('');
 
 	onMount(() => {
 		let currentIndex = 0;

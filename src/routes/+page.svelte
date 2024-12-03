@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-	export let data: PageData;
+	let data = $props();
 
 	const { misc_data, nyc_data, love_data } = data;
 
