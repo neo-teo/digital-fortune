@@ -6,6 +6,8 @@
 
 	let { misc_data, nyc_data, love_data } = $props();
 
+	console.log('FortuneTeller mounting', { misc_data, nyc_data, love_data });
+
 	function generateThinkingPattern(length = 60) {
 		return Array.from({ length }, () => (Math.random() < 0.66 ? '~' : '*')).join('');
 	}
@@ -23,6 +25,7 @@
 	let phase = $state<number>(PHASES.IDLE);
 
 	let currentChapter = $derived(chapters[chapterIndex]);
+	console.log('Current phase:', phase, 'Current chapter:', currentChapter);
 
 	let card_data = $derived(
 		currentChapter.id === 'nyc' ? nyc_data : currentChapter.id === 'love' ? love_data : misc_data
@@ -33,7 +36,11 @@
 	<div class="flex min-h-[80vh] max-w-[1024px] flex-col items-center justify-between gap-14">
 		<div class="flex flex-col items-center justify-center gap-10">
 			{#if phase === PHASES.IDLE}
-				{@const _ = setTimeout(() => (phase = PHASES.THINKING), 0)}
+				{@const _ = setTimeout(() => {
+					console.log('Transitioning from IDLE to THINKING');
+					phase = PHASES.THINKING;
+				}, 0)}
+				<div>Starting...</div>
 			{/if}
 
 			{#if currentChapter.id === 'intro'}
