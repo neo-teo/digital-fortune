@@ -3,6 +3,7 @@
 	import Typewriter from './Typewriter.svelte';
 	import FortuneCards from './FortuneCards.svelte';
 	import StarryButton from './StarryButton.svelte';
+	import { onMount } from 'svelte';
 
 	let { misc_data, nyc_data, love_data } = $props();
 
@@ -30,16 +31,21 @@
 	let card_data = $derived(
 		currentChapter.id === 'nyc' ? nyc_data : currentChapter.id === 'love' ? love_data : misc_data
 	);
+
+	onMount(() => {
+		console.log('Component mounted, transitioning from IDLE');
+		// Use requestAnimationFrame to ensure we're in a proper animation frame
+		requestAnimationFrame(() => {
+			phase = PHASES.THINKING;
+			console.log('Transitioned to THINKING phase');
+		});
+	});
 </script>
 
 <div class="flex justify-center text-2xl">
 	<div class="flex min-h-[80vh] max-w-[1024px] flex-col items-center justify-between gap-14">
 		<div class="flex flex-col items-center justify-center gap-10">
 			{#if phase === PHASES.IDLE}
-				{@const _ = setTimeout(() => {
-					console.log('Transitioning from IDLE to THINKING');
-					phase = PHASES.THINKING;
-				}, 0)}
 				<div>Starting...</div>
 			{/if}
 
