@@ -3,7 +3,6 @@
 	import Typewriter from './Typewriter.svelte';
 	import FortuneCards from './FortuneCards.svelte';
 	import StarryButton from './StarryButton.svelte';
-	import { onMount } from 'svelte';
 
 	let { misc_data, nyc_data, love_data } = $props();
 
@@ -30,7 +29,9 @@
 
 	$effect(() => {
 		if (phase === PHASES.IDLE) {
-			requestAnimationFrame(() => (phase = PHASES.THINKING));
+			requestAnimationFrame(() => {
+				phase = PHASES.THINKING;
+			});
 		}
 	});
 </script>
