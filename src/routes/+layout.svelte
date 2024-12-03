@@ -1,8 +1,6 @@
 <script lang="ts">
 	import '../app.css';
 	let { children } = $props();
-
-	console.log('Layout mounting');
 </script>
 
 <div
