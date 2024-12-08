@@ -1,15 +1,13 @@
 <script lang="ts">
 	import Card from './Card.svelte';
 
-	const { cards, onAllFlipped } = $props();
+	const { cards, onRevealed } = $props();
 
-	let toggledCount = $state(0);
+	let anyCardFlipped = $state(false);
 
 	function handleFlip() {
-		toggledCount++;
-		if (toggledCount === cards.length) {
-			setTimeout(() => onAllFlipped(), 2500);
-		}
+		anyCardFlipped = true;
+		setTimeout(() => onRevealed(), 2500);
 	}
 </script>
 
@@ -38,6 +36,6 @@
 			</div>
 		{/snippet}
 
-		<Card {front} {back} onFlip={handleFlip} />
+		<Card {front} {back} onFlip={handleFlip} disabled={anyCardFlipped} />
 	{/each}
 </div>

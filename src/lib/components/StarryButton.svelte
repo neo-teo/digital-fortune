@@ -61,12 +61,11 @@
 		width: fit-content;
 		padding: 0.5rem 1rem;
 		cursor: pointer;
-		border-radius: 5rem;
+		/* border-radius: 5rem; */
 		border: 1px solid black;
 	}
 
 	.continue-button:hover {
-		font-style: italic;
 		background-color: black;
 		color: white;
 	}

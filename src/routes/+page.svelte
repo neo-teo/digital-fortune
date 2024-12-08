@@ -1,15 +1,18 @@
 <script lang="ts">
-	import FortuneRadio from '$lib/components/FortuneRadio.svelte';
+	import IntroScreen from '$lib/components/IntroScreen.svelte';
 	import FortuneTeller from '$lib/components/FortuneTeller.svelte';
 	import Blurb from '$lib/components/Blurb.svelte';
 
 	let { data } = $props();
+	const { fortune } = data;
 
-	const { misc_data, nyc_data, love_data } = data;
+	let showFortuneTeller = $state(false);
 </script>
 
-<FortuneTeller {misc_data} {nyc_data} {love_data} />
-
-<!-- <FortuneRadio /> -->
+{#if !showFortuneTeller}
+	<IntroScreen onStart={() => (showFortuneTeller = true)} />
+{:else}
+	<FortuneTeller {fortune} />
+{/if}
 
 <Blurb />

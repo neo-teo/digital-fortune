@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { front, back, variant = 'square', onFlip = () => {} } = $props();
+	let { front, back, variant = 'square', onFlip = () => {}, disabled = false } = $props();
 
 	const variants = $derived({
 		shortsquare: { width: 256, height: 256 / 2 },
@@ -18,23 +18,24 @@
 	function flipCard() {
 		if (!flipped) {
 			onFlip();
+			randomX = (Math.random() - 0.5) * 10;
+			randomY = (Math.random() - 0.5) * 10;
+			flipped = true;
 		}
-		randomX = (Math.random() - 0.5) * 10;
-		randomY = (Math.random() - 0.5) * 10;
-		flipped = true;
 	}
 </script>
 
 <div
 	class="card-container relative overflow-visible"
-	class:pulse-scale={hovered && !flipped}
-	style:transform={`scale(${!hovered || flipped ? 1 : ''})`}
+	class:pulse-scale={hovered && !flipped && !disabled}
+	style:transform={`scale(${!hovered || flipped ? (disabled ? 0.95 : 1) : ''})`}
 	role="presentation"
 >
 	<button
 		onmouseenter={() => (hovered = true)}
 		onmouseleave={() => (hovered = false)}
 		onclick={flipCard}
+		{disabled}
 	>
 		<div
 			style:transform={flipped
@@ -59,6 +60,10 @@
 </div>
 
 <style lang="postcss">
+	.card {
+		font-family: Hershey, 'Times New Roman', serif;
+	}
+
 	button {
 		width: fit-content;
 	}

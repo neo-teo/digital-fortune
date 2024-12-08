@@ -26,7 +26,7 @@
 	});
 </script>
 
-<div class="text-center" class:break-all={!text.includes(' ')}>{displayText}</div>
+<div class:break-all={!text.includes(' ')}>{displayText}</div>
 
 <style>
 </style>

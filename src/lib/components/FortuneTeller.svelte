@@ -1,89 +1,68 @@
 <script lang="ts">
-	import { chapters } from '$lib/data/story_chapters';
 	import Typewriter from './Typewriter.svelte';
 	import FortuneCards from './FortuneCards.svelte';
 	import StarryButton from './StarryButton.svelte';
 
-	let { misc_data, nyc_data, love_data } = $props();
+	let { fortune } = $props();
 
-	function generateThinkingPattern(length = 60) {
+	function generateThinkingPattern(length = 120) {
 		return Array.from({ length }, () => (Math.random() < 0.66 ? '~' : '*')).join('');
 	}
 
 	const PHASES = {
 		IDLE: -1,
-		THINKING: 0,
-		INTRO: 1,
+		INTRO: 0,
+		THINKING: 1,
 		CARDS: 2,
 		OUTRO: 3,
 		CONTINUE: 4
 	} as const;
 
 	let chapterIndex = $state(0);
+
 	let phase = $state<number>(PHASES.IDLE);
 
-	let currentChapter = $derived(chapters[chapterIndex]);
-	let card_data = $derived(
-		currentChapter.id === 'nyc' ? nyc_data : currentChapter.id === 'love' ? love_data : misc_data
-	);
+	let currentChapter = $derived(fortune[chapterIndex]);
 
 	$effect(() => {
 		if (phase === PHASES.IDLE) {
-			requestAnimationFrame(() => {
-				phase = PHASES.THINKING;
-			});
+			requestAnimationFrame(() => (phase = PHASES.INTRO));
 		}
 	});
 </script>
 
-<div class="flex justify-center text-2xl">
+<div class="flex justify-center text-xl">
 	<div class="flex min-h-[80vh] max-w-[1024px] flex-col items-center justify-between gap-14">
-		<div class="flex flex-col items-center justify-center gap-10">
+		<div class="flex flex-col gap-10">
 			{#if phase === PHASES.IDLE}
 				<div>Starting...</div>
 			{/if}
 
-			{#if currentChapter.id === 'intro'}
-				<img src="goodluckspa.png" class="swingy w-3/4" alt="good luck spa !! :-)" />
+			{#if phase >= PHASES.INTRO}
+				<Typewriter text={currentChapter.introText} oncomplete={() => (phase = PHASES.THINKING)} />
 			{/if}
 
 			{#if phase >= PHASES.THINKING}
-				<Typewriter
-					text={currentChapter.id === 'intro' ? 'Ah ... welcome !' : generateThinkingPattern()}
-					speed={100}
-					oncomplete={() => (phase = PHASES.INTRO)}
-				/>
-			{/if}
-
-			{#if phase >= PHASES.INTRO}
-				<Typewriter
-					text={currentChapter.introText}
-					oncomplete={() => (phase = currentChapter.id === 'intro' ? PHASES.OUTRO : PHASES.CARDS)}
-				/>
+				<Typewriter text={generateThinkingPattern()} oncomplete={() => (phase = PHASES.CARDS)} />
 			{/if}
 
 			{#if phase >= PHASES.CARDS}
-				{#if currentChapter.id !== 'intro'}
-					<FortuneCards cards={card_data} onAllFlipped={() => (phase = PHASES.OUTRO)} />
-				{/if}
+				<FortuneCards cards={currentChapter.cards} onRevealed={() => (phase = PHASES.OUTRO)} />
 			{/if}
 
 			{#if phase >= PHASES.OUTRO}
 				<Typewriter text={currentChapter.outroText} oncomplete={() => (phase = PHASES.CONTINUE)} />
 			{/if}
 		</div>
-		{#if phase >= PHASES.CONTINUE && chapterIndex < chapters.length - 1}
-			{#if chapterIndex < chapters.length - 1}
-				<StarryButton
-					label="Continue"
-					onclick={() => {
-						chapterIndex++;
-						phase = PHASES.IDLE;
-					}}
-				/>
-			{:else}
-				<Typewriter text={'Have a wonderful day !'} />
-			{/if}
+
+		{#if phase >= PHASES.CONTINUE && chapterIndex < fortune.length - 1}
+			<StarryButton
+				label="Continue"
+				onclick={() => {
+					chapterIndex++;
+					phase = PHASES.IDLE;
+				}}
+			/>
 		{/if}
 	</div>
 </div>

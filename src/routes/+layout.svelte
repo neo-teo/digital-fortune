@@ -4,7 +4,7 @@
 </script>
 
 <div
-	class="relative min-h-screen py-20"
+	class="relative min-h-screen px-5 py-20"
 	style="background: linear-gradient(to bottom, 
 		white 0%,
 		rgb(200 210 215) 50px,
@@ -17,7 +17,7 @@
 
 <style lang="postcss">
 	:global(body) {
-		font-family: Hershey, 'Times New Roman', serif;
+		font-family: 'Terminal Grotesque', 'Times New Roman', serif;
 	}
 
 	@font-face {
@@ -35,5 +35,10 @@
 	@font-face {
 		font-family: 'Hershey';
 		src: url('/fonts/hershey_italic.ttf');
+	}
+
+	@font-face {
+		font-family: 'Terminal Grotesque';
+		src: url('/fonts/terminal-grotesque.ttf');
 	}
 </style>
