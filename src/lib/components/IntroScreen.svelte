@@ -6,21 +6,6 @@
 
 	let showContinue = $state(false);
 
-	function getDayMessage(): string {
-		const day = new Date().getDay();
-		return (
-			{
-				0: "Sunday's digital energies are especially strong.",
-				1: "Monday's digital stars are in perfect harmony.",
-				2: "Tuesday's binary streams are particularly clear.",
-				3: "Wednesday's binary streams are particularly clear.",
-				4: "Thursday's digital stars are especially bright.",
-				5: "Friday's digital stars are especially bright.",
-				6: "Saturday's virtual forces are in perfect harmony."
-			}[day] || ''
-		);
-	}
-
 	const today = new Date().toLocaleDateString('en-US', {
 		weekday: 'long',
 		year: 'numeric',
@@ -36,12 +21,13 @@
 	};
 
 	const script = [
-		`Welcome guest #${generateGuestId()}`,
-		`Today is ${today}`,
-		getDayMessage(),
-		'hello',
-		'Would you like to do a lucky web surf?',
-		'Follow your instincts and happy surfing ! :~)'
+		`${today} -- Today's binary streams are particularly clear.`,
+		`Oh ... hey there ! Welcome guest #${generateGuestId()}`,
+		'The internet is a vast digital wilderness, where hyperlink constellations light up the sky, underground pixel caves hide ancient forum treasures, and data streams flow through fiber-optic canyons.',
+		'It can sometimes feel easy to get lost in it all.',
+		'But not to worry! It seems like Pip the duck is here with us today to guide us through it!',
+		'Would you like to follow Pip on a journey around the world wide web?',
+		'Follow your instincts and happy surfing !'
 	];
 </script>
 

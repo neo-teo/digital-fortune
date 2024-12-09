@@ -9,10 +9,14 @@
 	let showFortuneTeller = $state(false);
 </script>
 
-{#if !showFortuneTeller}
-	<IntroScreen onStart={() => (showFortuneTeller = true)} />
-{:else}
-	<FortuneTeller {fortune} />
-{/if}
+<div class="flex justify-center">
+	<div class="flex max-w-[1000px] flex-col">
+		{#if !showFortuneTeller}
+			<IntroScreen onStart={() => (showFortuneTeller = true)} />
+		{:else}
+			<FortuneTeller {fortune} />
+		{/if}
 
-<Blurb />
+		<Blurb />
+	</div>
+</div>
