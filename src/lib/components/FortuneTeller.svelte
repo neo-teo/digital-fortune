@@ -7,10 +7,10 @@
 
 	function generateThinkingPattern(length = 120) {
 		const patterns = [
-			{ char: '~', probability: 0.4 },
-			{ char: '*', probability: 0.2 },
+			{ char: '~', probability: 0.2 },
+			{ char: '*', probability: 0.1 },
 			{ char: 'o', probability: 0.3 },
-			{ char: '_', probability: 0.1 }
+			{ char: '_', probability: 0.4 }
 		];
 
 		return Array.from({ length }, () => {
