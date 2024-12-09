@@ -3,7 +3,7 @@
 	import FortuneCards from './FortuneCards.svelte';
 	import FortuneButton from './FortuneButton.svelte';
 
-	let { fortune } = $props();
+	let { fortune, completedChapters = [], onChapterComplete = (i: number) => {} } = $props();
 
 	function generateThinkingPattern(length = 120) {
 		const patterns = [
@@ -22,7 +22,7 @@
 				if (rand < cumulative) return pattern.char;
 			}
 
-			return patterns[0].char; // fallback to first character
+			return patterns[0].char;
 		}).join('');
 	}
 
@@ -35,47 +35,87 @@
 		CONTINUE: 4
 	} as const;
 
-	let chapterIndex = $state(0);
-
-	let phase = $state<number>(PHASES.IDLE);
-
-	let currentChapter = $derived(fortune[chapterIndex]);
+	let activeChapterIndex = $state(0);
+	let phases = $state<Record<number, number>>({});
 
 	$effect(() => {
-		if (phase === PHASES.IDLE) {
-			requestAnimationFrame(() => (phase = PHASES.INTRO));
+		// Initialize new chapter phases
+		if (phases[activeChapterIndex] === undefined) {
+			phases = { ...phases, [activeChapterIndex]: PHASES.IDLE };
+		}
+	});
+
+	$effect(() => {
+		// Handle IDLE phase transitions
+		for (const [index, phase] of Object.entries(phases)) {
+			if (phase === PHASES.IDLE) {
+				requestAnimationFrame(() => {
+					phases = { ...phases, [index]: PHASES.INTRO };
+				});
+			}
 		}
 	});
 </script>
 
 <div class="flex flex-col gap-10">
-	{#if phase === PHASES.IDLE}
-		<div>Starting...</div>
-	{/if}
+	{#each fortune as chapter, i}
+		{#if i <= activeChapterIndex}
+			<div class="flex flex-col gap-10">
+				{#if phases[i] >= PHASES.INTRO}
+					<Typewriter
+						text={chapter.introText}
+						oncomplete={() => {
+							if (!completedChapters.includes(i)) {
+								phases = { ...phases, [i]: PHASES.THINKING };
+							}
+						}}
+					/>
+				{/if}
 
-	{#if phase >= PHASES.INTRO}
-		<Typewriter text={currentChapter.introText} oncomplete={() => (phase = PHASES.THINKING)} />
-	{/if}
+				{#if phases[i] >= PHASES.THINKING}
+					<Typewriter
+						text={generateThinkingPattern()}
+						oncomplete={() => {
+							if (!completedChapters.includes(i)) {
+								phases = { ...phases, [i]: PHASES.CARDS };
+							}
+						}}
+					/>
+				{/if}
 
-	{#if phase >= PHASES.THINKING}
-		<Typewriter text={generateThinkingPattern()} oncomplete={() => (phase = PHASES.CARDS)} />
-	{/if}
+				{#if phases[i] >= PHASES.CARDS}
+					<FortuneCards
+						cards={chapter.cards}
+						onRevealed={() => {
+							if (!completedChapters.includes(i)) {
+								phases = { ...phases, [i]: PHASES.OUTRO };
+							}
+						}}
+					/>
+				{/if}
 
-	{#if phase >= PHASES.CARDS}
-		<FortuneCards cards={currentChapter.cards} onRevealed={() => (phase = PHASES.OUTRO)} />
-	{/if}
+				{#if phases[i] >= PHASES.OUTRO}
+					<Typewriter
+						text={chapter.outroText}
+						oncomplete={() => {
+							if (!completedChapters.includes(i)) {
+								phases = { ...phases, [i]: PHASES.CONTINUE };
+							}
+						}}
+					/>
+				{/if}
 
-	{#if phase >= PHASES.OUTRO}
-		<Typewriter text={currentChapter.outroText} oncomplete={() => (phase = PHASES.CONTINUE)} />
-	{/if}
-
-	{#if phase >= PHASES.CONTINUE && chapterIndex < fortune.length - 1}
-		<FortuneButton
-			label="Continue"
-			onclick={() => {
-				chapterIndex++;
-				phase = PHASES.IDLE;
-			}}
-		/>
-	{/if}
+				{#if phases[i] >= PHASES.CONTINUE && i < fortune.length - 1}
+					<FortuneButton
+						label="Continue"
+						onclick={() => {
+							onChapterComplete(i);
+							activeChapterIndex++;
+						}}
+						disabled={completedChapters.includes(i)}
+					/>
+				{/if}
+			</div>
+		{/if}
+	{/each}
 </div>

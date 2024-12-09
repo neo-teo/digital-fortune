@@ -1,5 +1,5 @@
 <script lang="ts">
-	let { onclick, label, class: className = '' } = $props();
+	let { onclick, label, disabled = false, class: className = '' } = $props();
 
 	let hovered = $state(false);
 	let randomColor = $state('');
@@ -23,7 +23,7 @@
 	}
 
 	$effect(() => {
-		if (hovered) {
+		if (hovered || disabled) {
 			randomColor = getRandomColor();
 			randomRotation = getRandomRotation();
 		} else {
@@ -38,9 +38,10 @@
 		bind:this={buttonElement}
 		class="continue-button"
 		style="background-color: {randomColor}; transform: rotate({randomRotation}deg);"
-		{onclick}
+		onclick={disabled ? undefined : onclick}
 		onmouseenter={() => (hovered = true)}
-		onmouseleave={() => (hovered = false)}
+		onmouseleave={() => !disabled && (hovered = false)}
+		{disabled}
 	>
 		{label}
 	</button>
@@ -55,7 +56,12 @@
 		transition: all 0.3s ease;
 	}
 
-	.continue-button:hover {
+	.continue-button:hover:not([disabled]),
+	.continue-button[disabled] {
 		color: white;
+	}
+
+	.continue-button[disabled] {
+		cursor: default;
 	}
 </style>

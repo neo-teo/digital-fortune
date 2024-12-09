@@ -41,7 +41,7 @@ export function load() {
         },
         {
             introText: 'My favorite activity to kick back during my server\'s downtime is reading. Here are a few of my favorites for you to pick from.',
-            outroText: 'That\'s all for now. You can find me back here tomorrow for new waves to surf.',
+            outroText: 'That\'s all for now. You can find me back here tomorrow for new webs to surf.',
             cards: reading
         }
     ];

@@ -9,8 +9,7 @@
 	} = $props();
 
 	onMount(() => {
-		// TODO: start out at 0
-		let currentIndex = text.length;
+		let currentIndex = 0;
 
 		const interval = setInterval(() => {
 			if (currentIndex <= text.length) {

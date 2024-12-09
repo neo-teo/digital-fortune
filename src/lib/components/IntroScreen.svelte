@@ -3,7 +3,7 @@
 	import Pip from './Pip.svelte';
 	import FortuneButton from './FortuneButton.svelte';
 
-	let { onStart = () => console.log('onStart ignored') } = $props();
+	let { onStart = () => console.log('onStart ignored'), disabled = false } = $props();
 
 	let showContinue = $state(false);
 	let showPip = $state(false);
@@ -48,7 +48,7 @@
 	/>
 
 	{#if showContinue}
-		<FortuneButton label="Continue" onclick={onStart} />
+		<FortuneButton label="Continue" onclick={onStart} {disabled} />
 	{/if}
 
 	{#if showPip}

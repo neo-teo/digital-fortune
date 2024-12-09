@@ -6,15 +6,24 @@
 	let { data } = $props();
 	const { fortune } = data;
 
-	let showFortuneTeller = $state(false);
+	let completedChapters = $state<number[]>([]);
+	let introCompleted = $state(false);
+
+	function handleIntroComplete() {
+		introCompleted = true;
+	}
+
+	function handleChapterComplete(index: number) {
+		completedChapters = [...completedChapters, index];
+	}
 </script>
 
 <div class="flex justify-center">
-	<div class="flex max-w-[1000px] flex-col">
-		{#if !showFortuneTeller}
-			<IntroScreen onStart={() => (showFortuneTeller = true)} />
-		{:else}
-			<FortuneTeller {fortune} />
+	<div class="flex max-w-[1000px] flex-col gap-20">
+		<IntroScreen onStart={handleIntroComplete} disabled={introCompleted} />
+
+		{#if introCompleted}
+			<FortuneTeller {fortune} {completedChapters} onChapterComplete={handleChapterComplete} />
 		{/if}
 
 		<Blurb />
