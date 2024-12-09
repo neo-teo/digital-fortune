@@ -3,7 +3,7 @@
 
 	let {
 		text,
-		speed = 50,
+		speed = 30,
 		oncomplete = () => console.log('typewriter oncomplete ignored')
 	} = $props();
 
@@ -26,7 +26,7 @@
 	});
 </script>
 
-<div class:break-all={!text.includes(' ')}>{displayText}</div>
+<div class="whitespace-pre-line" class:break-all={!text.includes(' ')}>{displayText}</div>
 
 <style>
 </style>

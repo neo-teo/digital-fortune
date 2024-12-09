@@ -18,6 +18,7 @@
 <style lang="postcss">
 	:global(body) {
 		font-family: 'Terminal Grotesque', 'Times New Roman', serif;
+		@apply text-3xl;
 	}
 
 	@font-face {

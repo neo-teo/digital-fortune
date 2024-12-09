@@ -31,54 +31,36 @@
 	});
 </script>
 
-<div class="flex justify-center text-xl">
-	<div class="flex min-h-[80vh] max-w-[1024px] flex-col items-center justify-between gap-14">
-		<div class="flex flex-col gap-10">
-			{#if phase === PHASES.IDLE}
-				<div>Starting...</div>
-			{/if}
+<div class="flex flex-col gap-20">
+	<div class="flex flex-col gap-10">
+		{#if phase === PHASES.IDLE}
+			<div>Starting...</div>
+		{/if}
 
-			{#if phase >= PHASES.INTRO}
-				<Typewriter text={currentChapter.introText} oncomplete={() => (phase = PHASES.THINKING)} />
-			{/if}
+		{#if phase >= PHASES.INTRO}
+			<Typewriter text={currentChapter.introText} oncomplete={() => (phase = PHASES.THINKING)} />
+		{/if}
 
-			{#if phase >= PHASES.THINKING}
-				<Typewriter text={generateThinkingPattern()} oncomplete={() => (phase = PHASES.CARDS)} />
-			{/if}
+		{#if phase >= PHASES.THINKING}
+			<Typewriter text={generateThinkingPattern()} oncomplete={() => (phase = PHASES.CARDS)} />
+		{/if}
 
-			{#if phase >= PHASES.CARDS}
-				<FortuneCards cards={currentChapter.cards} onRevealed={() => (phase = PHASES.OUTRO)} />
-			{/if}
+		{#if phase >= PHASES.CARDS}
+			<FortuneCards cards={currentChapter.cards} onRevealed={() => (phase = PHASES.OUTRO)} />
+		{/if}
 
-			{#if phase >= PHASES.OUTRO}
-				<Typewriter text={currentChapter.outroText} oncomplete={() => (phase = PHASES.CONTINUE)} />
-			{/if}
-		</div>
-
-		{#if phase >= PHASES.CONTINUE && chapterIndex < fortune.length - 1}
-			<StarryButton
-				label="Continue"
-				onclick={() => {
-					chapterIndex++;
-					phase = PHASES.IDLE;
-				}}
-			/>
+		{#if phase >= PHASES.OUTRO}
+			<Typewriter text={currentChapter.outroText} oncomplete={() => (phase = PHASES.CONTINUE)} />
 		{/if}
 	</div>
+
+	{#if phase >= PHASES.CONTINUE && chapterIndex < fortune.length - 1}
+		<StarryButton
+			label="Continue"
+			onclick={() => {
+				chapterIndex++;
+				phase = PHASES.IDLE;
+			}}
+		/>
+	{/if}
 </div>
-
-<style>
-	.swingy {
-		transform-origin: top center;
-		animation: swing 2s ease-in-out infinite alternate;
-	}
-
-	@keyframes swing {
-		from {
-			transform: rotate(-3deg);
-		}
-		to {
-			transform: rotate(3deg);
-		}
-	}
-</style>

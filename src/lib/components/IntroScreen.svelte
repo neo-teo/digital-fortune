@@ -4,14 +4,7 @@
 
 	let { onStart = () => console.log('onStart ignored') } = $props();
 
-	let phase = $state(0);
-
-	const PHASES = {
-		WELCOME: 0,
-		INTRO: 1,
-		OUTRO: 2,
-		CONTINUE: 3
-	} as const;
+	let showContinue = $state(false);
 
 	function getDayMessage(): string {
 		const day = new Date().getDay();
@@ -35,50 +28,30 @@
 		day: 'numeric'
 	});
 
-	const introChapter = {
-		id: 'intro',
-		introText: `Today is ${today}. ${getDayMessage()}`,
-		outroText:
-			'Would you like to do a lucky web surf? Follow your instincts and happy surfing ! :~)'
+	const generateGuestId = () => {
+		const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		return Array.from({ length: 6 }, () =>
+			chars.charAt(Math.floor(Math.random() * chars.length))
+		).join('');
 	};
+
+	const script = [
+		`Welcome guest #${generateGuestId()}`,
+		`Today is ${today}`,
+		getDayMessage(),
+		'hello',
+		'Would you like to do a lucky web surf?',
+		'Follow your instincts and happy surfing ! :~)'
+	];
 </script>
 
-<div class="flex justify-center text-xl">
-	<div class="flex min-h-[80vh] max-w-[1024px] flex-col items-center justify-between gap-14">
-		<div class="flex flex-col gap-10">
-			<!-- <img src="goodluckspa.png" class="w-3/4" alt="good luck spa !! :-)" /> -->
+<div class="flex flex-col gap-20">
+	<Typewriter text={script.join('\n\n')} oncomplete={() => (showContinue = true)} />
 
-			{#if phase >= PHASES.WELCOME}
-				<Typewriter text="Ah ... welcome !" oncomplete={() => (phase = PHASES.INTRO)} />
-			{/if}
-
-			{#if phase >= PHASES.INTRO}
-				<Typewriter text={introChapter.introText} oncomplete={() => (phase = PHASES.OUTRO)} />
-			{/if}
-
-			{#if phase >= PHASES.OUTRO}
-				<Typewriter text={introChapter.outroText} oncomplete={() => (phase = PHASES.CONTINUE)} />
-			{/if}
-		</div>
-
-		{#if phase >= PHASES.CONTINUE}
-			<StarryButton label="Continue" onclick={onStart} />
-		{/if}
-	</div>
+	{#if showContinue}
+		<StarryButton label="Continue" onclick={onStart} />
+	{/if}
 </div>
 
 <style>
-	.swingy {
-		transform-origin: top center;
-		animation: swing 2s ease-in-out infinite alternate;
-	}
-
-	@keyframes swing {
-		from {
-			transform: rotate(-3deg);
-		}
-		to {
-			transform: rotate(3deg);
-		}
-	}
 </style>

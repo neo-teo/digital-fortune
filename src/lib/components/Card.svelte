@@ -28,7 +28,7 @@
 <div
 	class="card-container relative overflow-visible"
 	class:pulse-scale={hovered && !flipped && !disabled}
-	style:transform={`scale(${!hovered || flipped ? (disabled ? 0.95 : 1) : ''})`}
+	style:transform={`scale(${flipped ? 1 : disabled ? 0.8 : 1})`}
 	role="presentation"
 >
 	<button
