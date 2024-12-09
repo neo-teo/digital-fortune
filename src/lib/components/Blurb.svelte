@@ -1,5 +1,5 @@
 <script lang="ts">
-	import StarryButton from './StarryButton.svelte';
+	import FortuneButton from './FortuneButton.svelte';
 
 	let isOpen = $state(false);
 
@@ -8,10 +8,10 @@
 	}
 </script>
 
-<StarryButton
+<FortuneButton
 	label="?"
 	onclick={() => (isOpen = true)}
-	class="fixed bottom-8 right-8 items-center justify-center rounded-full"
+	class="fixed bottom-20 right-8 items-center justify-center rounded-full"
 />
 
 {#if isOpen}

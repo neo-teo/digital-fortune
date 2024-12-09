@@ -15,8 +15,8 @@ export const TOOLS = [
 ];
 
 export const READING = [
-    { number: 2, label: 'Solar Power Server', src: 'https://solar.lowtechmagazine.com/2023/12/how-to-build-a-small-solar-power-system/' },
-    { number: 4, label: 'The Creative Independent', src: 'https://thecreativeindependent.com' },
-    { number: 7, label: 'Life in 256kb', src: 'http://isomuein.net' },
-    { number: 12, label: 'Other Internet', src: 'https://otherinter.net' }
+    { number: 2, label: 'Solar Power Server', href: 'https://solar.lowtechmagazine.com/2023/12/how-to-build-a-small-solar-power-system/' },
+    { number: 4, label: 'The Creative Independent', href: 'https://thecreativeindependent.com' },
+    { number: 7, label: 'Life in 256kb', href: 'http://isomuein.net' },
+    { number: 12, label: 'Other Internet', href: 'https://otherinter.net' }
 ]

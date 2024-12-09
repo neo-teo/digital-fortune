@@ -1,0 +1,61 @@
+<script lang="ts">
+	let { onclick, label, class: className = '' } = $props();
+
+	let hovered = $state(false);
+	let randomColor = $state('');
+	let randomRotation = $state(0);
+
+	let buttonElement: HTMLElement;
+
+	function getRandomColor() {
+		const primaryColors = [
+			'#FF0000', // Red
+			'#00FF00', // Green
+			'#0000FF', // Blue
+			'#FF00FF', // Magenta
+			'#00FFFF' // Cyan
+		];
+		return primaryColors[Math.floor(Math.random() * primaryColors.length)];
+	}
+
+	function getRandomRotation() {
+		return Math.random() * 10 - 5; // Random rotation between -5 and 5 degrees
+	}
+
+	$effect(() => {
+		if (hovered) {
+			randomColor = getRandomColor();
+			randomRotation = getRandomRotation();
+		} else {
+			randomColor = '';
+			randomRotation = 0;
+		}
+	});
+</script>
+
+<div class={`${className} ${className.includes('fixed') ? '' : 'relative'}`}>
+	<button
+		bind:this={buttonElement}
+		class="continue-button"
+		style="background-color: {randomColor}; transform: rotate({randomRotation}deg);"
+		{onclick}
+		onmouseenter={() => (hovered = true)}
+		onmouseleave={() => (hovered = false)}
+	>
+		{label}
+	</button>
+</div>
+
+<style lang="postcss">
+	.continue-button {
+		width: fit-content;
+		padding: 0.5rem 1rem;
+		cursor: pointer;
+		border: 1px solid black;
+		transition: all 0.3s ease;
+	}
+
+	.continue-button:hover {
+		color: white;
+	}
+</style>

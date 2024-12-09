@@ -60,9 +60,9 @@
 </div>
 
 <style lang="postcss">
-	.card {
+	/* .card {
 		font-family: Hershey, 'Times New Roman', serif;
-	}
+	} */
 
 	button {
 		width: fit-content;
@@ -84,7 +84,7 @@
 	}
 
 	.face.front img {
-		border-radius: 10px;
+		/* border-radius: 10px; */
 		height: 90%;
 	}
 
@@ -93,7 +93,7 @@
 		width: 100%;
 		height: 100%;
 
-		border-radius: 10px;
+		/* border-radius: 10px; */
 
 		backface-visibility: hidden;
 
@@ -118,9 +118,10 @@
 		align-items: center;
 		justify-content: center;
 
-		border: 1px solid gray;
+		border: 1px solid black;
 
-		background: rgb(252, 251, 239);
+		background: white;
+		/* color: white; */
 	}
 
 	.face.top,

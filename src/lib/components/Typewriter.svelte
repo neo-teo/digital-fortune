@@ -3,14 +3,14 @@
 
 	let {
 		text,
-		speed = 30,
-		oncomplete = () => console.log('typewriter oncomplete ignored')
+		speed = 50,
+		oncomplete = () => console.log('typewriter oncomplete ignored'),
+		displayText = $bindable('')
 	} = $props();
 
-	let displayText = $state('');
-
 	onMount(() => {
-		let currentIndex = 0;
+		// TODO: start out at 0
+		let currentIndex = text.length;
 
 		const interval = setInterval(() => {
 			if (currentIndex <= text.length) {

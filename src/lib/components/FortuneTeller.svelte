@@ -1,12 +1,29 @@
 <script lang="ts">
 	import Typewriter from './Typewriter.svelte';
 	import FortuneCards from './FortuneCards.svelte';
-	import StarryButton from './StarryButton.svelte';
+	import FortuneButton from './FortuneButton.svelte';
 
 	let { fortune } = $props();
 
 	function generateThinkingPattern(length = 120) {
-		return Array.from({ length }, () => (Math.random() < 0.66 ? '~' : '*')).join('');
+		const patterns = [
+			{ char: '~', probability: 0.4 },
+			{ char: '*', probability: 0.2 },
+			{ char: 'o', probability: 0.3 },
+			{ char: '_', probability: 0.1 }
+		];
+
+		return Array.from({ length }, () => {
+			const rand = Math.random();
+			let cumulative = 0;
+
+			for (const pattern of patterns) {
+				cumulative += pattern.probability;
+				if (rand < cumulative) return pattern.char;
+			}
+
+			return patterns[0].char; // fallback to first character
+		}).join('');
 	}
 
 	const PHASES = {
@@ -31,31 +48,29 @@
 	});
 </script>
 
-<div class="flex flex-col gap-20">
-	<div class="flex flex-col gap-10">
-		{#if phase === PHASES.IDLE}
-			<div>Starting...</div>
-		{/if}
+<div class="flex flex-col gap-10">
+	{#if phase === PHASES.IDLE}
+		<div>Starting...</div>
+	{/if}
 
-		{#if phase >= PHASES.INTRO}
-			<Typewriter text={currentChapter.introText} oncomplete={() => (phase = PHASES.THINKING)} />
-		{/if}
+	{#if phase >= PHASES.INTRO}
+		<Typewriter text={currentChapter.introText} oncomplete={() => (phase = PHASES.THINKING)} />
+	{/if}
 
-		{#if phase >= PHASES.THINKING}
-			<Typewriter text={generateThinkingPattern()} oncomplete={() => (phase = PHASES.CARDS)} />
-		{/if}
+	{#if phase >= PHASES.THINKING}
+		<Typewriter text={generateThinkingPattern()} oncomplete={() => (phase = PHASES.CARDS)} />
+	{/if}
 
-		{#if phase >= PHASES.CARDS}
-			<FortuneCards cards={currentChapter.cards} onRevealed={() => (phase = PHASES.OUTRO)} />
-		{/if}
+	{#if phase >= PHASES.CARDS}
+		<FortuneCards cards={currentChapter.cards} onRevealed={() => (phase = PHASES.OUTRO)} />
+	{/if}
 
-		{#if phase >= PHASES.OUTRO}
-			<Typewriter text={currentChapter.outroText} oncomplete={() => (phase = PHASES.CONTINUE)} />
-		{/if}
-	</div>
+	{#if phase >= PHASES.OUTRO}
+		<Typewriter text={currentChapter.outroText} oncomplete={() => (phase = PHASES.CONTINUE)} />
+	{/if}
 
 	{#if phase >= PHASES.CONTINUE && chapterIndex < fortune.length - 1}
-		<StarryButton
+		<FortuneButton
 			label="Continue"
 			onclick={() => {
 				chapterIndex++;
