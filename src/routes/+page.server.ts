@@ -30,17 +30,17 @@ export function load() {
 
     const fortune = [
         {
-            introText: 'I love music. I sometimes DJ at the local data lake parties, so I\'m always looking for a fresh track to add to my mix. Just a moment while I pick out a few internet radio stations I think you might like.',
+            introText: 'I love music. I sometimes DJ at the local data lake parties, so I\'m always looking for a fresh track to add to my mix. Just a moment while I pick out a few internet stations I think you might like.',
             outroText: 'Ooo one of my favorites ! I wonder what\'s on right now...',
             cards: radio
         },
         {
-            introText: 'If you\'re looking to rennovate your digital home, these tools should come in handy. Take your pick!',
+            introText: 'If you\'re looking to rennovate your digital home, these tools should come in handy. Where did I put them again ? One sec...',
             outroText: 'Great pick ! My pond has been getting so many compliments from visiting ducks ever since I discovered that one.',
             cards: tools
         },
         {
-            introText: 'My favorite activity to kick back during my server\'s downtime is reading. Here are a few of my favorites for you to pick from.',
+            introText: 'My favorite activity to kick back during my server\'s downtime is reading. Let me find a few of my favorites for you to pick from.',
             outroText: 'That\'s all for now. You can find me back here tomorrow for new webs to surf.',
             cards: reading
         }

@@ -26,6 +26,6 @@
 			<FortuneTeller {fortune} {completedChapters} onChapterComplete={handleChapterComplete} />
 		{/if}
 
-		<Blurb />
+		<!-- <Blurb /> -->
 	</div>
 </div>

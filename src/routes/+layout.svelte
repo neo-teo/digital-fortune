@@ -1,6 +1,22 @@
 <script lang="ts">
 	import '../app.css';
 	let { children } = $props();
+
+	// Add scroll to bottom functionality
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		const observer = new ResizeObserver(() => {
+			window.scrollTo({
+				top: document.body.scrollHeight,
+				behavior: 'smooth'
+			});
+		});
+
+		observer.observe(document.body);
+
+		return () => observer.disconnect();
+	});
 </script>
 
 <div
@@ -35,7 +51,7 @@
 
 	@font-face {
 		font-family: 'Hershey';
-		src: url('/fonts/hershey_italic.ttf');
+		src: url('/fonts/hershey_italic2.ttf');
 	}
 
 	@font-face {

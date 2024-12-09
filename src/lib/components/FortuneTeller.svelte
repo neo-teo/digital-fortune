@@ -26,33 +26,27 @@
 		}).join('');
 	}
 
-	const PHASES = {
-		IDLE: -1,
-		INTRO: 0,
-		THINKING: 1,
-		CARDS: 2,
-		OUTRO: 3,
-		CONTINUE: 4
-	} as const;
+	const PHASES = ['INTRO', 'THINKING', 'CARDS', 'OUTRO', 'CONTINUE'] as const;
+	type Phase = (typeof PHASES)[number];
 
 	let activeChapterIndex = $state(0);
-	let phases = $state<Record<number, number>>({});
+	let phases = $state<Record<number, Phase>>({});
 
-	$effect(() => {
-		// Initialize new chapter phases
-		if (phases[activeChapterIndex] === undefined) {
-			phases = { ...phases, [activeChapterIndex]: PHASES.IDLE };
+	function advancePhase(chapterIndex: number) {
+		if (completedChapters.includes(chapterIndex)) return;
+
+		const currentPhase = phases[chapterIndex];
+		const nextPhaseIndex = PHASES.indexOf(currentPhase) + 1;
+
+		if (nextPhaseIndex < PHASES.length) {
+			phases = { ...phases, [chapterIndex]: PHASES[nextPhaseIndex] };
 		}
-	});
+	}
 
+	// Initialize new chapters
 	$effect(() => {
-		// Handle IDLE phase transitions
-		for (const [index, phase] of Object.entries(phases)) {
-			if (phase === PHASES.IDLE) {
-				requestAnimationFrame(() => {
-					phases = { ...phases, [index]: PHASES.INTRO };
-				});
-			}
+		if (!phases[activeChapterIndex]) {
+			phases = { ...phases, [activeChapterIndex]: PHASES[0] };
 		}
 	});
 </script>
@@ -60,52 +54,22 @@
 <div class="flex flex-col gap-10">
 	{#each fortune as chapter, i}
 		{#if i <= activeChapterIndex}
-			<div class="flex flex-col gap-10">
-				{#if phases[i] >= PHASES.INTRO}
-					<Typewriter
-						text={chapter.introText}
-						oncomplete={() => {
-							if (!completedChapters.includes(i)) {
-								phases = { ...phases, [i]: PHASES.THINKING };
-							}
-						}}
-					/>
+			<div class="pip-talk flex flex-col gap-10">
+				<Typewriter text={chapter.introText} oncomplete={() => advancePhase(i)} />
+
+				{#if phases[i] && PHASES.indexOf(phases[i]) >= PHASES.indexOf('THINKING')}
+					<Typewriter text={generateThinkingPattern()} oncomplete={() => advancePhase(i)} />
 				{/if}
 
-				{#if phases[i] >= PHASES.THINKING}
-					<Typewriter
-						text={generateThinkingPattern()}
-						oncomplete={() => {
-							if (!completedChapters.includes(i)) {
-								phases = { ...phases, [i]: PHASES.CARDS };
-							}
-						}}
-					/>
+				{#if phases[i] && PHASES.indexOf(phases[i]) >= PHASES.indexOf('CARDS')}
+					<FortuneCards cards={chapter.cards} onRevealed={() => advancePhase(i)} />
 				{/if}
 
-				{#if phases[i] >= PHASES.CARDS}
-					<FortuneCards
-						cards={chapter.cards}
-						onRevealed={() => {
-							if (!completedChapters.includes(i)) {
-								phases = { ...phases, [i]: PHASES.OUTRO };
-							}
-						}}
-					/>
+				{#if phases[i] && PHASES.indexOf(phases[i]) >= PHASES.indexOf('OUTRO')}
+					<Typewriter text={chapter.outroText} oncomplete={() => advancePhase(i)} />
 				{/if}
 
-				{#if phases[i] >= PHASES.OUTRO}
-					<Typewriter
-						text={chapter.outroText}
-						oncomplete={() => {
-							if (!completedChapters.includes(i)) {
-								phases = { ...phases, [i]: PHASES.CONTINUE };
-							}
-						}}
-					/>
-				{/if}
-
-				{#if phases[i] >= PHASES.CONTINUE && i < fortune.length - 1}
+				{#if phases[i] === 'CONTINUE' && i < fortune.length - 1}
 					<FortuneButton
 						label="Continue"
 						onclick={() => {
@@ -119,3 +83,10 @@
 		{/if}
 	{/each}
 </div>
+
+<style lang="postcss">
+	.pip-talk :global(#typewriter) {
+		font-family: 'Hershey', 'Times New Roman', serif;
+		@apply text-2xl;
+	}
+</style>

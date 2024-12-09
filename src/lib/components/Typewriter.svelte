@@ -25,7 +25,9 @@
 	});
 </script>
 
-<div class="whitespace-pre-line" class:break-all={!text.includes(' ')}>{displayText}</div>
+<div id="typewriter" class="whitespace-pre-line" class:break-all={!text.includes(' ')}>
+	{displayText}
+</div>
 
 <style>
 </style>
