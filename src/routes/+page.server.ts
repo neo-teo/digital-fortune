@@ -40,8 +40,8 @@ export function load() {
             cards: tools
         },
         {
-            introText: 'My favorite activity to kick back during my server\'s downtime is reading. Let me find a few of my favorites for you to pick from.',
-            outroText: 'That\'s all for now. You can find me back here tomorrow for new webs to surf.',
+            introText: 'My favorite activity to relax during my server\'s downtime is reading. Let me find a few of my favorites for you to pick from.',
+            outroText: 'That\'s all for now. Thank you for surfing the web with me. You can find me back here tomorrow if you want to catch new waves. I mean webs...',
             cards: reading
         }
     ];

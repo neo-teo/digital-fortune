@@ -105,7 +105,7 @@
 	}
 
 	.face.front {
-		padding: 5px;
+		padding: 10px;
 		image-rendering: pixelated;
 		display: flex;
 		flex-direction: column;

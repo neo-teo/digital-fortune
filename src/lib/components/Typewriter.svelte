@@ -3,7 +3,7 @@
 
 	let {
 		text,
-		speed = 50,
+		speed = 40,
 		oncomplete = () => console.log('typewriter oncomplete ignored'),
 		displayText = $bindable('')
 	} = $props();
