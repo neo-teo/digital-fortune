@@ -1,6 +1,6 @@
 export const RADIO = [
     { number: 1, label: 'The Lot Radio', href: 'https://www.thelotradio.com', src: '/radio/lot.png' },
-    { number: 3, label: 'Communial Radio Club', href: 'https://communalradio.club', src: '/radio/communal.png' },
+    { number: 3, label: 'Communal Radio Club', href: 'https://communalradio.club', src: '/radio/communal.png' },
     { number: 11, label: 'NTS', href: 'https://www.nts.live/1', src: '/radio/nts.png' },
 ];
 
