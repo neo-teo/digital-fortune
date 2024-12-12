@@ -19,7 +19,7 @@
 	}
 
 	function getRandomRotation() {
-		return Math.random() * 10 - 5; // Random rotation between -5 and 5 degrees
+		return Math.random() * 20 - 10;
 	}
 
 	$effect(() => {

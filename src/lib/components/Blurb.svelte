@@ -11,38 +11,56 @@
 <FortuneButton
 	label="?"
 	onclick={() => (isOpen = true)}
-	class="fixed bottom-20 right-8 items-center justify-center rounded-full"
+	class="fixed bottom-20 right-8 items-center justify-center"
 />
 
 {#if isOpen}
-	<div role="dialog" class="fixed inset-0 flex items-center justify-center bg-white/90 p-4">
-		<div class="relative w-full max-w-2xl rounded-lg p-8 [font-family:Times]">
+	<div role="dialog" class="fixed inset-0 flex items-center justify-center bg-black p-4 text-white">
+		<div class="relative w-full max-w-4xl p-8">
 			<div class="flex flex-col gap-4 text-center text-xl">
-				<h2 class="text-4xl italic">A website that offers a daily fortune.</h2>
-				<p>Digital fortune is meant to be consumed like a digital fortune cookie.</p>
+				<p>TLDR; bring back the old internet ¯\_(ツ)_/¯</p>
+				<p></p>
+				<p></p>
 				<p>
-					It is an ode to a simpler internet. When Google encouraged users to "Feel Lucky", when the
-					lovecalculator.com felt like magic, when "all your friends were on all at once".
+					I’m currently on the M train heading to work. The signal is bouncing in and out of my
+					phone making it tough to send an email (or particularly attach something to it) to a
+					recruiter I’ve been speaking with.
 				</p>
 				<p>
-					The flow and structure of our online experiences is increasingly the result of calculated,
-					algorithmic readings on our data. We breathe in targeted advertising breathe out
-					"algorithmic" feeds.
+					We just stopped on the tracks between Broadway Lafayette and W4. As I look around me see a
+					lot of people on the train are not on their phone. I see some books, some closed eyes,
+					some conversations.
 				</p>
 				<p>
-					Digital fortune is meant to make the world wide web a space with more chance occurences.
-					It is a fortuitous reading of the user, with no intent of storing any data for future use,
-					no AI, no tracking.
+					This felt unlike the New York subway I've experienced. I often think about what the subway
+					used to be like before smart phones. Come to think of it usage might be low at this
+					particular moment because we have no signal…
 				</p>
-				<p>Recommendations don't have to be perfect for them to be perfect.</p>
-				<p>Digital fortune is an open source fortuitous recommendation tool.</p>
+				<p>
+					Digital experiences have been made to keep our attention “infinitely”. The web, and
+					everything else I suppose should have a specific time frame and use case.
+				</p>
+				<p>
+					How do we recreate spontaneity on the web ? How do we recreate serendipity ? What are the
+					digital spaces that we choose to participate in ?
+				</p>
+				<p></p>
+				<p></p>
+				<p>
+					Pip the Duck is a web exploration tool by <a
+						class="text-blue-500 underline decoration-wavy"
+						target="_blank"
+						rel="noopener noreferrer"
+						href="https://www.teo.fyi">Teo</a
+					> as a little experiment in the process of answering some of the questions above.
+				</p>
 			</div>
 
-			<button
-				class="fixed inset-0 z-10 h-full w-full opacity-0"
-				onclick={closeBlurb}
-				aria-hidden="true"
-			></button>
+			<FortuneButton
+				label="?"
+				onclick={() => (isOpen = false)}
+				class="fixed bottom-20 right-8 items-center justify-center bg-white text-black"
+			/>
 		</div>
 	</div>
 {/if}
