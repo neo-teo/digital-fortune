@@ -27,7 +27,7 @@
 			randomColor = getRandomColor();
 			randomRotation = getRandomRotation();
 		} else {
-			randomColor = '';
+			randomColor = 'white';
 			randomRotation = 0;
 		}
 	});
@@ -36,7 +36,7 @@
 <div class={`${className} ${className.includes('fixed') ? '' : 'relative'}`}>
 	<button
 		bind:this={buttonElement}
-		class="continue-button"
+		class="z-5 continue-button"
 		style="background-color: {randomColor}; transform: rotate({randomRotation}deg);"
 		onclick={disabled ? undefined : onclick}
 		onmouseenter={() => (hovered = true)}

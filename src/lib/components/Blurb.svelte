@@ -59,7 +59,7 @@
 			<FortuneButton
 				label="?"
 				onclick={() => (isOpen = false)}
-				class="fixed bottom-20 right-8 items-center justify-center bg-white text-black"
+				class="fixed bottom-20 right-8 items-center justify-center text-black"
 			/>
 		</div>
 	</div>

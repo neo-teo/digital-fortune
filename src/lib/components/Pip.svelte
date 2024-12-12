@@ -9,7 +9,7 @@
 </script>
 
 <img
-	class="pip fixed right-[50px] w-[50px]"
+	class="pip fixed right-[50px] z-10 w-[50px]"
 	style=" --above1: {positions.above1}vh; 
 			--below1: {positions.below1}vh;
 			--above2: {positions.above2}vh;
